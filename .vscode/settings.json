@@ -1,0 +1,50 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.next": true,
+    "**/.yarn": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "yarn.lock": true,
+    "**/.yarn": true,
+    "**/.pnp.*": true,
+    "**/*.svg": true,
+    "**/docker-data/*": true
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "debug server-side",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "yarn run dev"
+      },
+      {
+        "name": "debug client-side",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost:3000"
+      },
+      {
+        "name": "debug full stack",
+        "type": "node-terminal",
+        "request": "launch",
+        "command": "yarn run dev",
+        "serverReadyAction": {
+          "pattern": "started server on .+, url: (https?://.+)",
+          "uriFormat": "%s",
+          "action": "debugWithChrome"
+        }
+      }
+    ]
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

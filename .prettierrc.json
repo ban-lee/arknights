@@ -1,0 +1,8 @@
+{
+  "arrowParens": "always",
+  "embeddedLanguageFormatting": "auto",
+  "printWidth": 120,
+  "quoteProps": "consistent",
+  "singleAttributePerLine": true,
+  "singleQuote": true
+}
