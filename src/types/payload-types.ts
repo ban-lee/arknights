@@ -95,6 +95,7 @@ export interface AkIcon {
 export interface AkHeader {
   id: string;
   alt?: string;
+  topColour?: string;
   cloudinary: {
     public_id?: string;
     original_filename?: string;
