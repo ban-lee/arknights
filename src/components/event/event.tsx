@@ -2,10 +2,11 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import RelativeTime from 'dayjs/plugin/relativeTime';
-import { AkHeader, Event, Material } from '@/types/payload-types';
+import { AkHeader, Event, Material, Operator } from '@/types/payload-types';
 import { Card, Grid, Group, Text, Title } from '@mantine/core';
 import { isLight } from '@/utils/colour';
 import { Materials } from '@/components/materials';
+import { Operators } from '../operators';
 import { useRef } from 'react';
 
 dayjs.extend(LocalizedFormat);
@@ -64,10 +65,10 @@ export function Event({ event }: EventProps) {
         <Grid align="center">
           {estimatedStart && (
             <>
-              <Grid.Col span={2}>
-                <Text weight="bold">Tentative EN:</Text>
+              <Grid.Col span={3}>
+                <Text weight="bold">Tentative EN</Text>
               </Grid.Col>
-              <Grid.Col span={10}>
+              <Grid.Col span={9}>
                 <Group>
                   <Text>{estimatedStart.format('ll')}</Text>
                   <Text>({dayjs().to(estimatedStart)})</Text>
@@ -77,11 +78,24 @@ export function Event({ event }: EventProps) {
           )}
           {event.materials && (
             <>
-              <Grid.Col span={2}>
-                <Text weight="bold">Materials:</Text>
+              <Grid.Col span={3}>
+                <Text weight="bold">Farming Materials</Text>
               </Grid.Col>
-              <Grid.Col span={10}>
+              <Grid.Col span={9}>
                 <Materials materials={(event.materials || []) as Material[]} />
+              </Grid.Col>
+            </>
+          )}
+          {(event.new?.newOperators || event.free?.freeOperators) && (
+            <>
+              <Grid.Col span={3}>
+                <Text weight="bold">New Operators</Text>
+              </Grid.Col>
+              <Grid.Col span={9}>
+                <Operators
+                  newOps={(event.new.newOperators as Operator[]) || []}
+                  freeOp={event.free.freeOperators as Operator | undefined}
+                />
               </Grid.Col>
             </>
           )}
