@@ -6,7 +6,8 @@
     "dev": "next dev | pino-pretty",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pretty": "run lint --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -14,13 +15,16 @@
     "@mantine/core": "^5.10.5",
     "@mantine/hooks": "^5.10.5",
     "@mantine/next": "^5.10.5",
+    "@prisma/client": "^4.11.0",
     "axios": "^1.3.4",
     "dayjs": "^1.11.7",
     "next": "13.2.1",
+    "next-superjson": "^0.0.4",
     "pino": "^8.11.0",
     "prettier": "^2.8.4",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "superjson": "^1.12.2"
   },
   "devDependencies": {
     "@types/node": "18.14.2",
@@ -31,6 +35,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "pino-pretty": "^9.4.0",
+    "prisma": "^4.11.0",
     "typescript": "4.9.5"
   },
   "packageManager": "yarn@3.4.1"
