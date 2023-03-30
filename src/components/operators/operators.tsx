@@ -1,11 +1,11 @@
 import { Divider, Grid, Stack, Text } from '@mantine/core';
 import { Operator as OperatorComponent } from './operator';
-import { Operator } from '@/types/payload-types';
+import { Operator } from '@prisma/client';
 import { useRef } from 'react';
 
 interface OperatorsProps {
   newOps: Operator[];
-  freeOp: Operator | undefined;
+  freeOp: Operator | null;
 }
 
 export function Operators({ newOps, freeOp }: OperatorsProps) {

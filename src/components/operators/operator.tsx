@@ -1,4 +1,4 @@
-import { Archetype, Operator } from '@/types/payload-types';
+import { Operator } from '@prisma/client';
 import { Text } from '@mantine/core';
 
 interface OperatorProps {
@@ -6,9 +6,7 @@ interface OperatorProps {
 }
 
 function getClass(operator: Operator): string {
-  const archetype = operator.archetype as Archetype;
-
-  return `(${archetype.class} - ${archetype.archetype})`;
+  return `(${operator.class} - ${operator.archetype})`;
 }
 
 export function Operator({ operator }: OperatorProps) {

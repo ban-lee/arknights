@@ -1,13 +1,13 @@
 import Image from 'next/image';
-import { AkIcon, Material } from '@/types/payload-types';
 import { BackgroundImage, Tooltip } from '@mantine/core';
+import { Material, MaterialRarityType } from '@prisma/client';
 
 interface MaterialProps {
   material: Material;
 }
 
-function getBgUrl(rarity: string | undefined): string {
-  return `/item-bg/t${rarity}.png`;
+function getBgUrl(rarity: MaterialRarityType | null): string {
+  return `/items/item-bg/${rarity}.png`;
 }
 
 export function Material({ material }: MaterialProps) {
@@ -27,9 +27,9 @@ export function Material({ material }: MaterialProps) {
       >
         <Image
           key={material.id}
-          src={(material.icon as AkIcon).url || ''}
-          width={40}
-          height={40}
+          src={`/items/${material.imgId}.png` || ''}
+          width={50}
+          height={50}
           css={{
             objectFit: 'contain',
           }}

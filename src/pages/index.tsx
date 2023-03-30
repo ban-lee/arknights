@@ -1,9 +1,7 @@
-import axios from 'axios';
-import { Event } from '@/types/payload-types';
 import { Event as EventComponent } from '@/components/event';
-import { getCmsUrl } from '@/utils/cms';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
+import { PrismaClient } from '@prisma/client';
 import { Space, Stack, Title } from '@mantine/core';
 
 export default function Home({ events }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -30,15 +28,25 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
   );
 }
 
-export async function getServerSideProps() {
-  const events: Event[] = await axios.get(getCmsUrl('/events?depth=2&limit=50')).then((res) => {
-    return res.data.docs.sort((eventA: Event, eventB: Event) => {
-      const dateA = new Date(eventA.dates.estimatedStart || 0).valueOf();
-      const dateB = new Date(eventB.dates.estimatedStart || 0).valueOf();
+async function getEvents() {
+  const prisma = new PrismaClient();
 
-      return dateA - dateB;
-    });
+  return await prisma.event.findMany({
+    orderBy: [{ estimatedStart: 'asc' }],
+    include: {
+      materials: true,
+      freeOp: true,
+      bannerOp: true,
+      newSkin: true,
+      freeSkin: true,
+      rerunSkin: true,
+    },
   });
+}
+
+export async function getServerSideProps() {
+  const events = await getEvents();
+
   return {
     props: {
       events,

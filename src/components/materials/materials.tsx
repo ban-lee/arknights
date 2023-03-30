@@ -1,6 +1,6 @@
 import { Group } from '@mantine/core';
 import { Material as MaterialComponent } from './material';
-import { Material } from '@/types/payload-types';
+import { Material } from '@prisma/client';
 
 interface MaterialsProps {
   materials: Material[];

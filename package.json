@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pretty": "run lint --fix"
+    "pretty": "run lint --fix",
+    "up-types": "prisma generate"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

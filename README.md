@@ -1,7 +1,7 @@
 # Upcoming Arknight Events
 
 A small site that lists upcoming events in Arknights. Event info is stored in my
-[Payload](https://github.com/ban-lee/cms-payload) CMS.
+[Keystone](https://github.com/ban-lee/cms-keystone) CMS.
 
 ## Credits
 - Game data from [Kengxxiao](https://github.com/Kengxxiao) /
@@ -9,5 +9,5 @@ A small site that lists upcoming events in Arknights. Event info is stored in my
 - Images from:
   - [Official Arknights homepage](https://ak.hypergryph.com)
   - [Aceship](https://github.com/Aceship) / [Arknight-Images](https://github.com/Aceship/Arknight-Images)
-- Tentative dates (with some hopeful fudging by me) from [jaywyeee](https://github.com/jaywyeee) /
+- Tentative dates (with some fudging) from [jaywyeee](https://github.com/jaywyeee) /
     [arknights-calendar](https://github.com/jaywyeee/arknights-calendar)
