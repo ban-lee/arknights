@@ -4,6 +4,10 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    "prettier/prettier": "warn"
-  }
+    "prettier/prettier": "warn",
+    "unused-imports/no-unused-imports": "warn"
+  },
+  "plugins": [
+    "unused-imports"
+  ]
 }
