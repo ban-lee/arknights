@@ -1,25 +1,28 @@
-import { Divider, Grid, Stack, Text } from '@mantine/core';
+import { Divider, Grid, Group, Text } from '@mantine/core';
+import { EventBannerTypeType, Operator } from '@prisma/client';
+import { getBannerTypeLabel } from '@/utils/operator';
 import { Operator as OperatorComponent } from './operator';
-import { Operator } from '@prisma/client';
 import { useRef } from 'react';
 
 interface OperatorsProps {
   newOps: Operator[];
   freeOp: Operator | null;
+  bannerType: EventBannerTypeType;
 }
 
-export function Operators({ newOps, freeOp }: OperatorsProps) {
+export function Operators({ newOps, freeOp, bannerType }: OperatorsProps) {
   const hasDivier = useRef(!!(newOps.length && freeOp)).current;
 
   return (
     <Grid align="center">
       {newOps.length > 0 && (
         <>
-          <Grid.Col span={2}>
-            <Text weight="bold">Banner</Text>
+          <Grid.Col span={3}>
+            <Text weight="bold">Banner Operators</Text>
+            <Text>{getBannerTypeLabel(bannerType)}</Text>
           </Grid.Col>
-          <Grid.Col span={10}>
-            <Stack>
+          <Grid.Col span={9}>
+            <Group>
               {newOps.map((op) => {
                 return (
                   <OperatorComponent
@@ -28,21 +31,16 @@ export function Operators({ newOps, freeOp }: OperatorsProps) {
                   />
                 );
               })}
-            </Stack>
+            </Group>
           </Grid.Col>
         </>
       )}
-      {hasDivier && (
-        <Grid.Col span={12}>
-          <Divider />
-        </Grid.Col>
-      )}
       {freeOp && (
         <>
-          <Grid.Col span={2}>
-            <Text weight="bold">Free</Text>
+          <Grid.Col span={3}>
+            <Text weight="bold">Free Operator</Text>
           </Grid.Col>
-          <Grid.Col span={10}>
+          <Grid.Col span={9}>
             <OperatorComponent operator={freeOp} />
           </Grid.Col>
         </>

@@ -33,7 +33,7 @@ export function Material({ material }: MaterialProps) {
           css={{
             objectFit: 'contain',
           }}
-          alt={`${material.name} icon`}
+          alt={`Icon for ${material.name}`}
         />
       </BackgroundImage>
     </Tooltip>

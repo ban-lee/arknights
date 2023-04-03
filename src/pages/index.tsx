@@ -8,7 +8,7 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
   return (
     <>
       <Layout title={'AK: Upcoming Events'}>
-        <Title align="center">Upcoming Events</Title>
+        <Title align="center">Karlan Tools | Upcoming Events</Title>
         <Space h="xl" />
         <Stack
           align="center"
@@ -31,17 +31,24 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
 async function getEvents() {
   const prisma = new PrismaClient();
 
-  return await prisma.event.findMany({
-    orderBy: [{ estimatedStart: 'asc' }],
-    include: {
-      materials: true,
-      freeOp: true,
-      bannerOp: true,
-      newSkin: true,
-      freeSkin: true,
-      rerunSkin: true,
-    },
-  });
+  return await prisma.event
+    .findMany({
+      orderBy: [{ estimatedStart: 'asc' }],
+      include: {
+        materials: true,
+        freeOp: true,
+        bannerOp: true,
+        newSkin: { include: { operator: true } },
+        freeSkin: { include: { operator: true } },
+        rerunSkin: { include: { operator: true } },
+      },
+    })
+    .then((events) => {
+      for (const event of events) {
+        event.bannerOp.sort((a, b) => b.rarity - a.rarity);
+      }
+      return events;
+    });
 }
 
 export async function getServerSideProps() {
