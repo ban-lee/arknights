@@ -7,8 +7,8 @@ import { Space, Stack, Title } from '@mantine/core';
 export default function Home({ events }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Layout title={'AK: Upcoming Events'}>
-        <Title align="center">Karlan Tools | Upcoming Events</Title>
+      <Layout title={'Karlan Tools: Upcoming AK Events'}>
+        <Title align="center">Upcoming Events</Title>
         <Space h="xl" />
         <Stack
           align="center"
