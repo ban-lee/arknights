@@ -1,25 +1,13 @@
-import dayjs from 'dayjs';
 import Image from 'next/image';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import RelativeTime from 'dayjs/plugin/relativeTime';
-import {
-  Card,
-  Divider,
-  Grid,
-  Group,
-  Text,
-  Title
-  } from '@mantine/core';
+import { Card, Divider, Grid, Text, Title } from '@mantine/core';
 import { CloudinaryImage } from '@/types/keystone-types';
+import { EventDate } from './event-date';
 import { isLight } from '@/utils/colour';
 import { Material, Prisma } from '@prisma/client';
 import { Materials } from '@/components/materials';
 import { Operators } from '@/components/operators';
 import { Skins } from '@/components/skins';
 import { useRef } from 'react';
-
-dayjs.extend(LocalizedFormat);
-dayjs.extend(RelativeTime);
 
 const fullEvent = Prisma.validator<Prisma.EventArgs>()({
   include: {
@@ -36,6 +24,7 @@ type FullEvent = Prisma.EventGetPayload<typeof fullEvent>;
 
 interface EventProps {
   event: FullEvent;
+  isPriority: boolean;
 }
 
 function getHeaderFontColour(headerBgColour: string): string {
@@ -44,10 +33,7 @@ function getHeaderFontColour(headerBgColour: string): string {
   return isLight(headerBgColour) ? 'dark' : 'light';
 }
 
-export function Event({ event }: EventProps) {
-  const estimatedStart = useRef<dayjs.Dayjs | undefined>(
-    event.estimatedStart ? dayjs(event.estimatedStart) : undefined
-  ).current;
+export function Event({ event, isPriority }: EventProps) {
   const headerBgColour = useRef<string>(event.topColour || '').current;
   const headerFontColour = useRef<string>(getHeaderFontColour(headerBgColour)).current;
 
@@ -70,36 +56,33 @@ export function Event({ event }: EventProps) {
               width={780}
               height={250}
               alt={`${event.name} event banner`}
+              priority={isPriority}
             />
           </Card.Section>
         )}
-        <Card.Section mb={16}>
+        <Card.Section
+          mb={16}
+          pb={12}
+          sx={(theme) => ({
+            backgroundColor: headerBgColour,
+            color: headerFontColour === 'light' ? theme.white : theme.black,
+          })}
+        >
           <Title
             order={2}
             align="center"
-            py={12}
-            color={headerFontColour}
-            sx={{
-              backgroundColor: headerBgColour,
-            }}
+            sx={{ padding: '12px 0 4px 0' }}
           >
             {event.name}
           </Title>
+          <EventDate
+            cnStart={event.cnStart}
+            estimatedStart={event.estimatedStart}
+            enStart={event.enStart}
+            enEnd={event.enEnd}
+          />
         </Card.Section>
         <Grid align="center">
-          {estimatedStart && (
-            <>
-              <Grid.Col span={3}>
-                <Text weight="bold">Tentative EN</Text>
-              </Grid.Col>
-              <Grid.Col span={9}>
-                <Group>
-                  <Text>{estimatedStart.format('ll')}</Text>
-                  <Text>({dayjs().to(estimatedStart)})</Text>
-                </Group>
-              </Grid.Col>
-            </>
-          )}
           {event.materials.length > 0 && (
             <>
               <Grid.Col span={3}>

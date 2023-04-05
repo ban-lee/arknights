@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Box, Center, Image as MantineImage, Text, Tooltip } from '@mantine/core';
+import { Box, Text, Tooltip } from '@mantine/core';
 import { getBrandMetadata } from '@/utils/brand';
 import { getRarityColour } from '@/utils/operator';
 import { ImageNotFound } from '../image-not-found';
@@ -48,7 +48,7 @@ export function Skin({ skin }: SkinProps) {
           src={brandMetadata.logo}
           alt={brandMetadata.label}
           width={140}
-          height={140}
+          height={175}
           css={{
             objectFit: 'contain',
           }}

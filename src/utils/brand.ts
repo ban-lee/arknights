@@ -31,6 +31,6 @@ export function getBrandMetadata(brand?: string | null) {
   brand = brand.replace('/', '-');
   return {
     label: BRANDS.get(brand)!,
-    logo: `/ui/brand/${brand}-lrg.webp`,
+    logo: `/ui/brand/${brand}-bg.webp`,
   };
 }

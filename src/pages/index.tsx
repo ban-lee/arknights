@@ -14,11 +14,12 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
           align="center"
           spacing={40}
         >
-          {events.map((event) => {
+          {events.map((event, index) => {
             return (
               <EventComponent
                 key={event.id}
                 event={event}
+                isPriority={index <= 3}
               />
             );
           })}

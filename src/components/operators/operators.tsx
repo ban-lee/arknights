@@ -1,6 +1,6 @@
-import { Divider, Grid, Group, Text } from '@mantine/core';
 import { EventBannerTypeType, Operator } from '@prisma/client';
 import { getBannerTypeLabel } from '@/utils/operator';
+import { Grid, Group, Text } from '@mantine/core';
 import { Operator as OperatorComponent } from './operator';
 import { useRef } from 'react';
 
