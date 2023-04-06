@@ -1301,6 +1301,7 @@ __metadata:
     "@types/react": 18.0.28
     "@types/react-dom": 18.0.11
     axios: ^1.3.4
+    bootstrap-icons: ^1.10.4
     dayjs: ^1.11.7
     eslint: 8.35.0
     eslint-config-next: 13.2.1
@@ -1502,6 +1503,13 @@ __metadata:
     inherits: ^2.0.4
     readable-stream: ^3.4.0
   checksum: 9e8521fa7e83aa9427c6f8ccdcba6e8167ef30cc9a22df26effcc5ab682ef91d2cbc23a239f945d099289e4bbcfae7a192e9c28c84c6202e710a0dfec3722662
+  languageName: node
+  linkType: hard
+
+"bootstrap-icons@npm:^1.10.4":
+  version: 1.10.4
+  resolution: "bootstrap-icons@npm:1.10.4"
+  checksum: d76333e46dc75bc5b8942211d91703af5033e186f31bc7de06d7d816ba5ee7f70cd94c07b00d36321b104c0b86f5305936602b43504c7407168a00b6c2d2713d
   languageName: node
   linkType: hard
 
