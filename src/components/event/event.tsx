@@ -3,9 +3,9 @@ import { Card, Divider, Grid, Text, Title } from '@mantine/core';
 import { CloudinaryImage } from '@/types/keystone-types';
 import { EventDate } from './event-date';
 import { isLight } from '@/utils/colour';
-import { Material, Prisma } from '@prisma/client';
 import { Materials } from '@/components/materials';
 import { Operators } from '@/components/operators';
+import { Prisma } from '@prisma/client';
 import { Skins } from '@/components/skins';
 import { useRef } from 'react';
 
@@ -89,7 +89,7 @@ export function Event({ event, isPriority }: EventProps) {
                 <Text weight="bold">Farming Materials</Text>
               </Grid.Col>
               <Grid.Col span={9}>
-                <Materials materials={(event.materials || []) as Material[]} />
+                <Materials materials={event.materials} />
               </Grid.Col>
             </>
           )}
