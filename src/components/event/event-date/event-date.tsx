@@ -52,7 +52,7 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
             weight="bold"
             mr={32}
           >
-            Tentative Start Date
+            Tentative Date
           </Text>
           <Text>{estimatedDate.format('ll')}</Text>
           <Text ml={4}>({dayjs().to(estimatedDate)})</Text>
