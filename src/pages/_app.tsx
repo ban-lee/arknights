@@ -7,7 +7,14 @@ export default function App({ Component, pageProps }: AppProps) {
     <MantineProvider
       withGlobalStyles
       withNormalizeCSS
-      theme={{ colorScheme: 'dark' }}
+      theme={{
+        colorScheme: 'dark',
+        fontFamily: 'Noto Sans, sans-serif',
+        headings: {
+          fontFamily: 'Montserrat, sans-serif',
+          fontWeight: 800,
+        },
+      }}
     >
       <Component {...pageProps} />
     </MantineProvider>

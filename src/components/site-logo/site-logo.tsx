@@ -9,18 +9,18 @@ export function SiteLogo() {
     >
       <Box>
         <Image
-          src="/karlan-trade.webp"
-          alt="Karlan Tools Logo (which is just the Karlan Trade Logo)"
+          src="/karlan-tools-2.webp"
+          alt="Karlan Tools Logo"
           height={75}
           width={75}
           priority
         />
       </Box>
       <Image
-        src="/karlan-tools-text.webp"
-        alt="Karlan Tools"
+        src="/karlan-tools-text-2.webp"
+        alt="Karlan Tools Logo Text"
         height={16}
-        width={394 / 2}
+        width={197}
         priority
       />
     </Stack>
