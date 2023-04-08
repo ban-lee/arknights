@@ -1,11 +1,6 @@
 import { Anchor, createStyles, CSSObject, Group, MantineTheme, Text, ThemeIcon } from '@mantine/core';
+import { Link } from '@/types/app-types';
 import { useRouter } from 'next/router';
-
-export interface Link {
-  label: string;
-  url?: string;
-  icon?: string;
-}
 
 interface SimpleLinkProps {
   link: Link;
@@ -37,7 +32,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function SubLinks({ link }: SimpleLinkProps) {
+export function SimpleLink({ link }: SimpleLinkProps) {
   const router = useRouter();
   const { classes } = useStyles();
 
@@ -61,7 +56,7 @@ export function SubLinks({ link }: SimpleLinkProps) {
           </ThemeIcon>
         )}
         <Text
-          size="md"
+          size="sm"
           sx={{
             fontFamily: 'Montserrat, sans-serif',
           }}
