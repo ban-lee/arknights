@@ -55,6 +55,16 @@ async function getEvents() {
         freeSkin: { include: { operator: true } },
         rerunSkin: { include: { operator: true } },
       },
+      where: {
+        OR: [
+          {
+            enEnd: { gte: new Date().toISOString() },
+          },
+          {
+            enEnd: { equals: null },
+          },
+        ],
+      },
     })
     .then((events) => {
       for (const event of events) {
