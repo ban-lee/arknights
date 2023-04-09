@@ -1,17 +1,8 @@
+import { Collapse, createStyles, Group, Stack, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
 import { GroupLink } from '@/types/app-types';
 import { linkCss, SimpleLink } from './simple-link';
+import { mediumScreenSize } from '@/utils/media-query';
 import { useState } from 'react';
-import {
-  Collapse,
-  createStyles,
-  em,
-  getBreakpointValue,
-  Group,
-  Stack,
-  Text,
-  ThemeIcon,
-  UnstyledButton,
-} from '@mantine/core';
 
 interface LinkGroupProps {
   link: GroupLink;
@@ -26,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     flex: '1 1',
     fontFamily: 'Montserrat, sans-serif',
 
-    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.lg))})`]: {
+    [mediumScreenSize(theme)]: {
       fontSize: theme.fontSizes.sm,
     },
   },

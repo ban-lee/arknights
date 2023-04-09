@@ -19,7 +19,7 @@ export function SiteLogo({ size }: Props) {
       </Box>
       <Image
         src="/karlan-tools-text-2.webp"
-        alt="Karlan Tools Logo Text"
+        alt="Karlan Tools Co., LTD."
         height={size === 'sm' ? 10 : 16}
         width={size === 'sm' ? 131 : 197}
         priority

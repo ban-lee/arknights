@@ -1,16 +1,7 @@
+import { Anchor, createStyles, CSSObject, Group, MantineTheme, Text, ThemeIcon } from '@mantine/core';
 import { Link } from '@/types/app-types';
+import { mediumScreenSize } from '@/utils/media-query';
 import { useRouter } from 'next/router';
-import {
-  Anchor,
-  createStyles,
-  CSSObject,
-  em,
-  getBreakpointValue,
-  Group,
-  MantineTheme,
-  Text,
-  ThemeIcon,
-} from '@mantine/core';
 
 interface SimpleLinkProps {
   link: Link;
@@ -43,7 +34,7 @@ const useStyles = createStyles((theme) => ({
   subLinkText: {
     fontFamily: 'Montserrat, sans-serif',
 
-    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.lg))})`]: {
+    [mediumScreenSize(theme)]: {
       fontSize: theme.fontSizes.xs,
     },
   },

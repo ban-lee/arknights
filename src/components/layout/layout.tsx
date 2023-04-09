@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { createStyles, em, getBreakpointValue, ScrollArea } from '@mantine/core';
+import { createStyles, ScrollArea } from '@mantine/core';
+import { lessThanSmall, moreThanSmall } from '@/utils/media-query';
 import { Navigation } from '@/components/navigation';
 
 interface LayoutProps {
@@ -13,12 +14,12 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
   },
   narrow: {
-    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.sm))})`]: {
+    [lessThanSmall(theme)]: {
       flexDirection: 'column',
     },
   },
   wide: {
-    [`@media (min-width: ${em(getBreakpointValue(theme.breakpoints.sm))})`]: {
+    [moreThanSmall(theme)]: {
       flexDirection: 'row',
     },
   },
@@ -29,11 +30,18 @@ const useStyles = createStyles((theme) => ({
     flex: '0 0 auto',
     position: 'sticky',
     left: 0,
-    zIndex: 100,
+    zIndex: 2000,
   },
   scroll: {
     flex: '1 1 auto',
-    height: '100vh',
+
+    [lessThanSmall(theme)]: {
+      height: 'calc(100vh - 100px)',
+    },
+
+    [moreThanSmall(theme)]: {
+      height: '100vh',
+    },
   },
 }));
 
