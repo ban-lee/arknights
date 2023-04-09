@@ -1,6 +1,16 @@
-import { Anchor, createStyles, CSSObject, Group, MantineTheme, Text, ThemeIcon } from '@mantine/core';
 import { Link } from '@/types/app-types';
 import { useRouter } from 'next/router';
+import {
+  Anchor,
+  createStyles,
+  CSSObject,
+  em,
+  getBreakpointValue,
+  Group,
+  MantineTheme,
+  Text,
+  ThemeIcon,
+} from '@mantine/core';
 
 interface SimpleLinkProps {
   link: Link;
@@ -30,6 +40,13 @@ const useStyles = createStyles((theme) => ({
     padding: 12,
     paddingLeft: 32,
   },
+  subLinkText: {
+    fontFamily: 'Montserrat, sans-serif',
+
+    [`@media (max-width: ${em(getBreakpointValue(theme.breakpoints.lg))})`]: {
+      fontSize: theme.fontSizes.xs,
+    },
+  },
 }));
 
 export function SimpleLink({ link }: SimpleLinkProps) {
@@ -45,24 +62,11 @@ export function SimpleLink({ link }: SimpleLinkProps) {
     >
       <Group>
         {!!link.icon && (
-          <ThemeIcon
-            size="sm"
-            sx={(theme) => ({
-              fontSize: theme.fontSizes.xs,
-              lineHeight: `${theme.fontSizes.xs}px`,
-            })}
-          >
+          <ThemeIcon size="sm">
             <i className={`bi ${link.icon}`}></i>
           </ThemeIcon>
         )}
-        <Text
-          size="sm"
-          sx={{
-            fontFamily: 'Montserrat, sans-serif',
-          }}
-        >
-          {link.label}
-        </Text>
+        <Text className={classes.subLinkText}>{link.label}</Text>
       </Group>
     </Anchor>
   );

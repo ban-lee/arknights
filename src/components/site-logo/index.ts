@@ -1,1 +1,1 @@
-export * from './site-logo';
+export * from './site-logo-vertical';

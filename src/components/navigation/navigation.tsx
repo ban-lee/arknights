@@ -1,7 +1,7 @@
 import { GroupLink as GroupLinkComponent } from './group-link';
 import { GroupLink } from '@/types/app-types';
 import { Navbar, Stack } from '@mantine/core';
-import { SiteLogo } from '../site-logo';
+import { SiteLogoVertical } from '../site-logo';
 
 const links: GroupLink[] = [
   { label: 'Home', url: '/', icon: 'bi-house-fill', links: [] },
@@ -19,17 +19,15 @@ const links: GroupLink[] = [
 export function Navigation() {
   return (
     <Navbar
-      height={'100vh'}
-      width={{ sm: 300 }}
+      width={{ sm: 200, md: 200, lg: 300 }}
+      hiddenBreakpoint="sm"
+      hidden
     >
       <Navbar.Section>
-        <SiteLogo />
+        <SiteLogoVertical />
       </Navbar.Section>
       <Navbar.Section>
-        <Stack
-          my={8}
-          spacing={0}
-        >
+        <Stack spacing={0}>
           {links.map((link, index) => (
             <GroupLinkComponent
               key={index}
