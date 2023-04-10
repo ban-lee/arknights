@@ -36,6 +36,7 @@ const useStyles = createStyles((theme) => ({
 export function GroupLink({ link }: LinkGroupProps) {
   const { classes } = useStyles();
 
+  const isLink = !!link.url;
   const hasSubLinks = !!link.links?.length;
   const [opened, setOpened] = useState(link.initiallyOpened || false);
 
@@ -43,8 +44,14 @@ export function GroupLink({ link }: LinkGroupProps) {
     <>
       <UnstyledButton
         className={classes.groupLink}
+        component={isLink ? 'a' : 'button'}
+        href={isLink ? link.url : undefined}
         sx={(theme) => ({ color: !!link.url ? theme.colors.blue[4] : undefined })}
-        onClick={() => setOpened((o) => !o)}
+        onClick={() => {
+          if (isLink) return;
+
+          setOpened((o) => !o);
+        }}
       >
         <Group noWrap>
           {!!link.icon && (
