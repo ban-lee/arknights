@@ -1,10 +1,13 @@
-import { Group } from '@mantine/core';
-import { SiteLogo } from './site-logo';
+import Image from 'next/image';
 
 export function SiteLogoHorizontal() {
   return (
-    <Group spacing={8}>
-      <SiteLogo size={'md'} />
-    </Group>
+    <Image
+      src="/logo/logo-horizontal.webp"
+      alt="Karlan Tools Logo"
+      width={280}
+      height={75}
+      priority
+    />
   );
 }

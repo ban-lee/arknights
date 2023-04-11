@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { createStyles, ScrollArea } from '@mantine/core';
+import { Header } from './header';
 import { lessThanSmall, moreThanSmall } from '@/utils/media-query';
-import { Navigation } from '@/components/navigation';
+import { Sidebar } from './sidebar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,13 +13,10 @@ const useStyles = createStyles((theme) => ({
   container: {
     display: 'flex',
     width: '100%',
-  },
-  narrow: {
+
     [lessThanSmall(theme)]: {
       flexDirection: 'column',
     },
-  },
-  wide: {
     [moreThanSmall(theme)]: {
       flexDirection: 'row',
     },
@@ -46,7 +44,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function Layout({ children, title }: LayoutProps) {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
   return (
     <>
       <Head>
@@ -64,9 +62,10 @@ export function Layout({ children, title }: LayoutProps) {
           href="/favicon.ico"
         />
       </Head>
-      <div className={cx(classes.container, classes.narrow, classes.wide)}>
+      <div className={classes.container}>
         <div className={classes.navigation}>
-          <Navigation />
+          <Header />
+          <Sidebar />
         </div>
         <main className={classes.main}>
           <ScrollArea className={classes.scroll}>{children}</ScrollArea>
