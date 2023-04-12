@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { createStyles, ScrollArea } from '@mantine/core';
 import { Header } from './header';
-import { lessThanSmall, moreThanSmall } from '@/utils/media-query';
+import { lessThanSmall, smallOrMore } from '@/utils/media-query';
 import { Sidebar } from './sidebar';
 
 interface LayoutProps {
@@ -14,10 +14,10 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     width: '100%',
 
-    [lessThanSmall(theme)]: {
+    [`@media ${lessThanSmall(theme)}`]: {
       flexDirection: 'column',
     },
-    [moreThanSmall(theme)]: {
+    [`@media ${smallOrMore(theme)}`]: {
       flexDirection: 'row',
     },
   },
@@ -33,11 +33,11 @@ const useStyles = createStyles((theme) => ({
   scroll: {
     flex: '1 1 auto',
 
-    [lessThanSmall(theme)]: {
+    [`@media ${lessThanSmall(theme)}`]: {
       height: 'calc(100vh - 100px)',
     },
 
-    [moreThanSmall(theme)]: {
+    [`@media ${smallOrMore(theme)}`]: {
       height: '100vh',
     },
   },

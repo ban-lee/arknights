@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     flex: '1 1',
     fontFamily: 'Montserrat, sans-serif',
 
-    [mediumScreenSize(theme)]: {
+    [`@media ${mediumScreenSize(theme)}`]: {
       fontSize: theme.fontSizes.sm,
     },
   },

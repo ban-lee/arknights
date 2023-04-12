@@ -34,7 +34,7 @@ const useStyles = createStyles((theme) => ({
   subLinkText: {
     fontFamily: 'Montserrat, sans-serif',
 
-    [mediumScreenSize(theme)]: {
+    [`@media ${mediumScreenSize(theme)}`]: {
       fontSize: theme.fontSizes.xs,
     },
   },

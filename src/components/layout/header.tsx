@@ -1,14 +1,14 @@
 import { Burger, createStyles, Group, Header as MantineHeader, Navbar } from '@mantine/core';
-import { moreThanSmall } from '@/utils/media-query';
 import { Navigation } from '@/components/navigation';
 import { SiteLogoHorizontal } from '@/components/site-logo';
+import { smallOrMore } from '@/utils/media-query';
 import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   header: {
     position: 'relative',
 
-    [moreThanSmall(theme)]: {
+    [`@media ${smallOrMore(theme)}`]: {
       display: 'none',
     },
   },
@@ -29,7 +29,7 @@ export function Header() {
   return (
     <>
       <MantineHeader
-        height={100}
+        height={80}
         className={classes.header}
       >
         <Group

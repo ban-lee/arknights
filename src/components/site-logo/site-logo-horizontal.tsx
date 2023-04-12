@@ -5,8 +5,8 @@ export function SiteLogoHorizontal() {
     <Image
       src="/logo/logo-horizontal.webp"
       alt="Karlan Tools Logo"
-      width={280}
-      height={75}
+      width={224}
+      height={60}
       priority
     />
   );
