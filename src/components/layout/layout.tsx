@@ -21,9 +21,6 @@ const useStyles = createStyles((theme) => ({
       flexDirection: 'row',
     },
   },
-  main: {
-    width: '100%',
-  },
   navigation: {
     flex: '0 0 auto',
     position: 'sticky',
@@ -67,7 +64,7 @@ export function Layout({ children, title }: LayoutProps) {
           <Header />
           <Sidebar />
         </div>
-        <main className={classes.main}>
+        <main>
           <ScrollArea className={classes.scroll}>{children}</ScrollArea>
         </main>
       </div>

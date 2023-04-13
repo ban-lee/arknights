@@ -72,6 +72,7 @@ const useStyles = createStyles((theme: MantineTheme) => ({
 export function MaterialsTable({ events, materials }: Props) {
   const { classes } = useStyles();
   const [displayRows, setDisplayRows] = useState<DisplayRow[]>([]);
+  const [displayCols, setDisplayCols] = useState<boolean[]>(Array(materials.length).fill(false));
 
   useEffect(() => {
     const newRows: DisplayRow[] = [];
@@ -86,6 +87,10 @@ export function MaterialsTable({ events, materials }: Props) {
         if (index < 0) throw new Error(`Could not find material [${material.id} - ${material.name}]`);
 
         row.materialIndices[index] = true;
+        setDisplayCols((cols) => {
+          cols[index] = true;
+          return cols;
+        });
       }
 
       newRows.push(row);
@@ -139,6 +144,8 @@ export function MaterialsTable({ events, materials }: Props) {
                   </Box>
                 </td>
                 {row.materialIndices.map((value, index) => {
+                  if (!displayCols[index]) return <></>;
+
                   const mat = materials[index];
                   return (
                     <td
