@@ -1,51 +1,46 @@
-import { Anchor, createStyles, Group, Text, ThemeIcon } from '@mantine/core';
+import { Anchor, createStyles, CSSObject, Group, MantineTheme, Text, ThemeIcon } from '@mantine/core';
+import { Link } from '@/types/app-types';
+import { mediumScreenSize } from '@/utils/media-query';
 import { useRouter } from 'next/router';
-
-export interface Link {
-  label: string;
-  url?: string;
-  icon?: string;
-}
 
 interface SimpleLinkProps {
   link: Link;
-  isSubLink?: boolean;
+}
+
+export function linkCss(theme: MantineTheme): CSSObject {
+  return {
+    cursor: 'pointer',
+    textDecoration: 'none',
+
+    '&.selected': {
+      fontWeight: 600,
+      backgroundColor: theme.colors.gray[8],
+    },
+
+    '&:hover': {
+      backgroundColor: theme.colors.gray[9],
+      textDecoration: 'none',
+    },
+  };
 }
 
 const useStyles = createStyles((theme) => ({
-  link: {
-    cursor: 'pointer',
-    minHeight: 50,
-    padding: '12px 16px',
-    textDecoration: 'none',
-    fontSize: theme.fontSizes.md,
-
-    '&.selected': {
-      fontWeight: 'bold',
-      backgroundColor: theme.colors.gray[8],
-    },
-
-    '&:hover': {
-      backgroundColor: theme.colors.gray[9],
-    },
-  },
   subLink: {
+    ...linkCss(theme),
     display: 'block',
     padding: 12,
     paddingLeft: 32,
+  },
+  subLinkText: {
+    fontFamily: 'Montserrat, sans-serif',
 
-    '&.selected': {
-      fontWeight: 'bold',
-      backgroundColor: theme.colors.gray[8],
-    },
-
-    '&:hover': {
-      backgroundColor: theme.colors.gray[9],
+    [`@media ${mediumScreenSize(theme)}`]: {
+      fontSize: theme.fontSizes.xs,
     },
   },
 }));
 
-export function SimpleLink({ link, isSubLink }: SimpleLinkProps) {
+export function SimpleLink({ link }: SimpleLinkProps) {
   const router = useRouter();
   const { classes } = useStyles();
 
@@ -53,16 +48,16 @@ export function SimpleLink({ link, isSubLink }: SimpleLinkProps) {
 
   return (
     <Anchor
-      className={`${isSubLink ? classes.subLink : classes.link} ${isSelected ? 'selected' : ''}`}
+      className={`${classes.subLink} ${isSelected ? 'selected' : ''}`}
       href={link.url}
     >
       <Group>
         {!!link.icon && (
-          <ThemeIcon p={16}>
+          <ThemeIcon size="sm">
             <i className={`bi ${link.icon}`}></i>
           </ThemeIcon>
         )}
-        <Text size={isSubLink ? 'sm' : 'md'}>{link.label}</Text>
+        <Text className={classes.subLinkText}>{link.label}</Text>
       </Group>
     </Anchor>
   );
