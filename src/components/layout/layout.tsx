@@ -21,17 +21,17 @@ const useStyles = createStyles((theme) => ({
       flexDirection: 'row',
     },
   },
-  main: {
-    width: '100%',
-  },
   navigation: {
     flex: '0 0 auto',
     position: 'sticky',
     left: 0,
     zIndex: 2000,
   },
-  scroll: {
+  main: {
     flex: '1 1 auto',
+  },
+  scroll: {
+    width: '100%',
 
     [`@media ${lessThanSmall(theme)}`]: {
       height: 'calc(100vh - 100px)',
