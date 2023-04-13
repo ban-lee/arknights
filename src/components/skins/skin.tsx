@@ -61,7 +61,7 @@ export function Skin({ skin }: SkinProps) {
       >
         {imageAvailable && (
           <Image
-            src={`/avatars/${skin.imgId.replace('#', '-')}.png`}
+            src={`/avatars/${skin.imgId.replace('#', '%23')}.png`}
             alt={skin.name}
             width={120}
             height={120}
