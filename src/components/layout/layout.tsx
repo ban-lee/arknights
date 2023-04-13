@@ -27,8 +27,11 @@ const useStyles = createStyles((theme) => ({
     left: 0,
     zIndex: 2000,
   },
-  scroll: {
+  main: {
     flex: '1 1 auto',
+  },
+  scroll: {
+    width: '100%',
 
     [`@media ${lessThanSmall(theme)}`]: {
       height: 'calc(100vh - 100px)',
@@ -64,7 +67,7 @@ export function Layout({ children, title }: LayoutProps) {
           <Header />
           <Sidebar />
         </div>
-        <main>
+        <main className={classes.main}>
           <ScrollArea className={classes.scroll}>{children}</ScrollArea>
         </main>
       </div>

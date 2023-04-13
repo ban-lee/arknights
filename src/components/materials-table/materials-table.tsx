@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import { Box, createStyles, Group, MantineTheme, Stack, Table, Text } from '@mantine/core';
+import { Box, createStyles, Flex, Group, MantineTheme, rem, ScrollArea, Stack, Table, Text } from '@mantine/core';
 import { CloudinaryImage } from '@/types/keystone-types';
 import { EventDate } from '../event/event-date';
+import { largeOrMore, lessThanSmall, smallOrMore } from '@/utils/media-query';
 import { Material as MaterialComponent } from '../materials/material';
 import { Material, Prisma } from '@prisma/client';
-import { Theme } from '@emotion/react';
 import { useEffect, useState } from 'react';
 
 const event = Prisma.validator<Prisma.EventArgs>()({
@@ -32,16 +32,27 @@ interface DisplayRow {
 }
 
 const useStyles = createStyles((theme: MantineTheme) => ({
+  tableArea: {
+    [`@media ${lessThanSmall(theme)}`]: {
+      maxWidth: 'calc(100vw - 390px)',
+    },
+    [`@media ${smallOrMore(theme)}`]: {
+      maxWidth: 'calc(100vw - 200px - 390px)',
+    },
+    [`@media ${largeOrMore(theme)}`]: {
+      maxWidth: 'calc(100vw - 300px - 390px)',
+    },
+  },
   table: {
-    minWidth: 1675,
-    width: '100%',
     backgroundColor: theme.colors.gray[9],
+    tableLayout: 'fixed',
+
+    borderLeft: '0',
   },
   eventCell: {
     position: 'relative',
-    height: 125,
-    maxWidth: 391,
-    width: 391,
+    outline: `${rem(1)} solid ${theme.colors.dark[4]}`,
+    outlineOffset: -1,
 
     '&:hover': {
       '> div:after': {
@@ -51,8 +62,9 @@ const useStyles = createStyles((theme: MantineTheme) => ({
   },
   eventCellDate: {
     position: 'absolute',
-    bottom: 0,
-    width: '100%',
+    bottom: 1,
+    left: 1,
+    width: 'calc(100% - 2px)',
     padding: '4px 0',
 
     '&:after': {
@@ -65,7 +77,16 @@ const useStyles = createStyles((theme: MantineTheme) => ({
 
       backgroundColor: theme.colors.gray[9],
       opacity: 0.75,
+      zIndex: 5,
     },
+
+    '.text': {
+      zIndex: 10,
+    },
+  },
+  materialCell: {
+    width: 75,
+    height: 125,
   },
 }));
 
@@ -100,75 +121,84 @@ export function MaterialsTable({ events, materials }: Props) {
   }, [events, materials]);
 
   return (
-    <Box sx={{ padding: '0 24px' }}>
-      <Table
-        horizontalSpacing={0}
-        verticalSpacing={0}
-        withBorder
-        withColumnBorders
-        className={classes.table}
-      >
-        <tbody>
-          {displayRows.map((row) => {
-            return (
-              <tr key={row.event.id}>
-                <td className={classes.eventCell}>
-                  <Image
-                    src={(row.event.headerImg as unknown as CloudinaryImage)._meta.secure_url || ''}
-                    alt={`${row.event.name} event banner`}
-                    css={{
-                      objectFit: 'cover',
-                    }}
-                    width={390}
-                    height={125}
-                    priority
-                  />
-                  <Box className={classes.eventCellDate}>
-                    <Stack spacing={2}>
-                      <Text
-                        weight="bold"
-                        align="center"
-                        sx={() => ({ zIndex: 100 })}
-                      >
-                        {row.event.name}
-                      </Text>
-                      <Box sx={() => ({ zIndex: 100 })}>
-                        <EventDate
-                          cnStart={null}
-                          estimatedStart={row.event.estimatedStart}
-                          enStart={row.event.enStart}
-                          enEnd={row.event.enEnd}
-                        />
-                      </Box>
-                    </Stack>
+    <Flex>
+      <Stack spacing={0}>
+        {displayRows.map((row) => {
+          return (
+            <Box
+              key={row.event.id}
+              className={classes.eventCell}
+            >
+              <Image
+                src={(row.event.headerImg as unknown as CloudinaryImage)._meta.secure_url || ''}
+                alt={`${row.event.name} event banner`}
+                css={{
+                  objectFit: 'cover',
+                }}
+                width={390}
+                height={125}
+                priority
+              />
+              <Box className={classes.eventCellDate}>
+                <Stack spacing={2}>
+                  <Text
+                    weight="bold"
+                    align="center"
+                    className={`text`}
+                  >
+                    {row.event.name}
+                  </Text>
+                  <Box className={`text`}>
+                    <EventDate
+                      cnStart={null}
+                      estimatedStart={row.event.estimatedStart}
+                      enStart={row.event.enStart}
+                      enEnd={row.event.enEnd}
+                    />
                   </Box>
-                </td>
-                {row.materialIndices.map((value, index) => {
-                  if (!displayCols[index]) return <></>;
+                </Stack>
+              </Box>
+            </Box>
+          );
+        })}
+      </Stack>
+      <ScrollArea className={classes.tableArea}>
+        <Table
+          horizontalSpacing={0}
+          verticalSpacing={0}
+          withBorder
+          withColumnBorders
+          className={classes.table}
+        >
+          <tbody>
+            {displayRows.map((row) => {
+              return (
+                <tr key={row.event.id}>
+                  {row.materialIndices.map((value, index) => {
+                    if (!displayCols[index]) return <></>;
 
-                  const mat = materials[index];
-                  return (
-                    <td
-                      key={mat.id}
-                      css={(theme: Theme) => ({
-                        minWidth: 80,
-                        borderRight: '1px solid ' + (theme as MantineTheme).colors.dark[9],
-                      })}
-                    >
-                      <Group
-                        align="center"
-                        position="center"
+                    const mat = materials[index];
+                    return (
+                      <td
+                        key={mat.id}
+                        className={classes.materialCell}
                       >
-                        {value && <MaterialComponent material={mat} />}
-                      </Group>
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </Box>
+                        <Group
+                          align="center"
+                          position="center"
+                          aria-label={`Material dropped during ${row.event.name}`}
+                        >
+                          {value && <MaterialComponent material={mat} />}
+                        </Group>
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </ScrollArea>
+    </Flex>
   );
 }

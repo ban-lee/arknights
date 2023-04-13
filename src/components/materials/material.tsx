@@ -12,7 +12,10 @@ function getBgUrl(rarity: MaterialRarityType | null): string {
 
 export function Material({ material }: MaterialProps) {
   return (
-    <Tooltip label={material.name}>
+    <Tooltip
+      label={`${material.rarity?.toUpperCase()}: ${material.name}`}
+      events={{ hover: true, focus: true, touch: true }}
+    >
       <BackgroundImage
         src={getBgUrl(material.rarity)}
         sx={{
