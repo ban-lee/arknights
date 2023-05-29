@@ -46,7 +46,23 @@ async function getEvents() {
       materials: true,
     },
     where: {
-      materials: { some: {} },
+      AND: [
+        {
+          materials: { some: {} },
+        },
+        {
+          OR: [
+            // Events that only have tentative dates.
+            {
+              enStart: { equals: null },
+            },
+            // Events that haven't ended in global.
+            {
+              enEnd: { gte: new Date().toISOString() },
+            },
+          ],
+        },
+      ],
     },
   });
 }
