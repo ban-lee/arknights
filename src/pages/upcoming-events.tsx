@@ -57,11 +57,17 @@ async function getEvents() {
       },
       where: {
         OR: [
+          // Events that only have tentative dates.
+          {
+            enStart: { equals: null },
+          },
+          // Events that haven't ended in global.
           {
             enEnd: { gte: new Date().toISOString() },
           },
+          // Events that have release date but no time period.
           {
-            enEnd: { equals: null },
+            AND: [{ enStart: { gte: new Date().toISOString() } }, { enEnd: { equals: null } }],
           },
         ],
       },

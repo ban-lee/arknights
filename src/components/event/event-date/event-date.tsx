@@ -17,21 +17,21 @@ interface EventDateProps {
 function fromIsoDayToLocal(date: Date) {
   // TODO: Fix the way dates are stored.
   const day = date.toISOString().split('T')[0];
-  return new Date(`${day} GMT-0500`);
+  return new Date(`${day} 00:00:00-07:00`);
 }
 
 function fromIsoToLocalStart(date: Date) {
   // TODO: Fix the way dates are stored.
   // For now, take the day of the event start and use the hardcoded values for start time.
   const day = date.toISOString().split('T')[0];
-  return new Date(`${day} 10:00 GMT-0700`);
+  return new Date(`${day} 10:00:00-07:00`);
 }
 
 function fromIsoToLocalEnd(date: Date) {
   // TODO: Fix the way dates are stored.
   // For now, take the day of the event end and use the hardcoded values for end time.
   const day = date.toISOString().split('T')[0];
-  return new Date(`${day} 03:59 GMT-0700`);
+  return new Date(`${day} 03:59:00-07:00`);
 }
 
 export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
@@ -68,7 +68,7 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
             </>
           )}
           {!isStarted && <Text ml={4}>(starts {dayjs().to(enStartDate)})</Text>}
-          {isStarted && <Text ml={4}>(ends {dayjs().to(enEndDate)})</Text>}
+          {isStarted && enEndDate && <Text ml={4}>(ends {dayjs().to(enEndDate)})</Text>}
         </Center>
       )}
     </>
