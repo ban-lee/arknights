@@ -19,7 +19,7 @@ export function Sidebar() {
     <>
       <Navbar
         className={classes.navbar}
-        width={{ sm: 200, md: 200, lg: 300 }}
+        width={{ sm: 300 }}
       >
         <Navbar.Section py={16}>
           <SiteLogoVertical />
