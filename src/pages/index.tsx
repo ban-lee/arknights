@@ -1,16 +1,85 @@
-import { Box, Space, Text, Title } from '@mantine/core';
+import { Box, Card, Center, Space, Text, Title } from '@mantine/core';
+import { Event as EventComponent } from '@/components/event';
+import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
+import { prisma } from '@/utils/prisma';
 
-export default function Home() {
+export default function Home({ events }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const hasRunningEvent = events && events.length > 0;
+
   return (
     <>
       <Layout title={'Karlan Tools'}>
         <Box py={32}>
-          <Title align="center">Karlan Tools</Title>
+          <Title
+            order={1}
+            align="center"
+          >
+            Karlan Tools
+          </Title>
           <Space h="xl" />
-          <Text align="center">Some random Arknights things that I{"'"}ve made.</Text>
+
+          {hasRunningEvent && (
+            <Center>
+              <EventComponent
+                event={events[0]}
+                isPriority={true}
+              />
+            </Center>
+          )}
+          {!hasRunningEvent && (
+            <Card
+              py={50}
+              sx={() => ({
+                margin: '2em auto',
+                maxWidth: 600,
+                textAlign: 'center',
+                width: '100%',
+              })}
+            >
+              <Title order={2}>Dead Time</Title>
+              <Space h="sm" />
+              <Text>Currently no events are happening</Text>
+            </Card>
+          )}
         </Box>
       </Layout>
     </>
   );
+}
+
+async function getRunningEvent() {
+  return await prisma.event
+    .findMany({
+      orderBy: [{ enStart: 'desc' }],
+      include: {
+        materials: true,
+        freeOp: true,
+        bannerOp: true,
+        newSkin: { include: { operator: true } },
+        freeSkin: { include: { operator: true } },
+        rerunSkin: { include: { operator: true } },
+      },
+      where: {
+        // Event that hasn't ended in global.
+        enEnd: { gte: new Date().toISOString() },
+      },
+      take: 1,
+    })
+    .then((events) => {
+      for (const event of events) {
+        event.bannerOp.sort((a, b) => b.rarity - a.rarity);
+      }
+      return events;
+    });
+}
+
+export async function getServerSideProps() {
+  const events = await getRunningEvent();
+
+  return {
+    props: {
+      events,
+    },
+  };
 }
