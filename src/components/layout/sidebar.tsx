@@ -5,6 +5,7 @@ import { SiteLogoVertical } from '@/components/site-logo';
 
 const useStyles = createStyles((theme) => ({
   navbar: {
+    background: '#872A08',
     height: '100vh',
 
     [`@media ${lessThanSmall(theme)}`]: {
@@ -20,8 +21,12 @@ export function Sidebar() {
       <Navbar
         className={classes.navbar}
         width={{ sm: 300 }}
+        withBorder={false}
       >
-        <Navbar.Section py={16}>
+        <Navbar.Section
+          pt={24}
+          pb={36}
+        >
           <SiteLogoVertical />
         </Navbar.Section>
         <Navbar.Section>

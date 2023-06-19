@@ -51,7 +51,7 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
 async function getRunningEvent() {
   return await prisma.event
     .findMany({
-      orderBy: [{ enStart: 'desc' }],
+      orderBy: [{ enStart: 'asc' }],
       include: {
         materials: true,
         freeOp: true,

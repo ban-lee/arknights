@@ -20,6 +20,8 @@ const useStyles = createStyles((theme) => ({
   text: {
     flex: '1 1',
     fontFamily: 'Montserrat, sans-serif',
+    fontWeight: 600,
+    letterSpacing: 1,
   },
   subNav: {
     borderLeft: '1px solid',
@@ -38,7 +40,10 @@ export function GroupLink({ link }: LinkGroupProps) {
     return (
       <Group noWrap>
         {!!link.icon && (
-          <ThemeIcon p={16}>
+          <ThemeIcon
+            p={16}
+            color="yellow.7"
+          >
             <i className={`bi ${link.icon}`}></i>
           </ThemeIcon>
         )}
@@ -57,7 +62,7 @@ export function GroupLink({ link }: LinkGroupProps) {
     return (
       <Link
         className={`${classes.groupLink} ${isSelected ? 'selected' : ''}`}
-        css={(theme) => ({ color: (theme as MantineTheme).colors.blue[4] })}
+        css={(theme) => ({ color: (theme as MantineTheme).colors.yellow[7] })}
         href={link.url!}
       >
         {getInternal()}

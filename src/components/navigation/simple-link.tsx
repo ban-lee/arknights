@@ -10,16 +10,17 @@ interface SimpleLinkProps {
 export function linkCss(theme: MantineTheme): CSSObject {
   return {
     cursor: 'pointer',
+    fontWeight: 500,
+    letterSpacing: 1,
     textDecoration: 'none',
 
     '&.selected': {
+      background: '#601E06',
       fontWeight: 600,
-      backgroundColor: theme.colors.gray[8],
     },
 
-    '&:hover': {
-      backgroundColor: theme.colors.gray[9],
-      textDecoration: 'none',
+    '&:hover, &:focus': {
+      background: '#601E06',
     },
   };
 }
@@ -45,12 +46,15 @@ export function SimpleLink({ link }: SimpleLinkProps) {
   return (
     <Link
       className={`${classes.subLink} ${isSelected ? 'selected' : ''}`}
-      css={(theme) => ({ color: (theme as MantineTheme).colors.blue[4] })}
+      css={(theme) => ({ color: (theme as MantineTheme).colors.yellow[7] })}
       href={link.url!}
     >
       <Group>
         {!!link.icon && (
-          <ThemeIcon size="sm">
+          <ThemeIcon
+            size="sm"
+            color="yellow.7"
+          >
             <i className={`bi ${link.icon}`}></i>
           </ThemeIcon>
         )}
