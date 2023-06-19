@@ -1,4 +1,4 @@
-import { Box, Card, Center, Space, Text, Title } from '@mantine/core';
+import { Box, Card, Space, Text, Title } from '@mantine/core';
 import { EventSummary } from '@/components/event/event-summary';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
@@ -10,52 +10,48 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
   return (
     <>
       <Layout title={'Karlan Tools'}>
-        <Box
-          sx={{
-            padding: '3em 2em',
-          }}
-        >
+        <>
           <Title
-            order={1}
-            align="center"
+            sx={{
+              textAlign: 'center',
+              margin: '1.5em auto 0.75em',
+            }}
           >
             Karlan Tools
           </Title>
-          <Space h="xl" />
+          <Box
+            sx={{
+              padding: '0 1em 2em',
 
-          {hasRunningEvent && (
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2em',
-              }}
-            >
-              {events.map((event) => (
-                <EventSummary
-                  key={event.id}
-                  event={event}
-                />
-              ))}
-            </Box>
-          )}
-          {!hasRunningEvent && (
-            <Card
-              py={50}
-              sx={() => ({
-                margin: '2em auto',
-                maxWidth: 780,
-                textAlign: 'center',
-                width: '100%',
-              })}
-            >
-              <Title order={2}>Dead Time</Title>
-              <Space h="sm" />
-              <Text>Currently no events are happening</Text>
-            </Card>
-          )}
-        </Box>
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '3em',
+            }}
+          >
+            {events.map((event) => (
+              <EventSummary
+                key={event.id}
+                event={event}
+              />
+            ))}
+            {!hasRunningEvent && (
+              <Card
+                py={50}
+                sx={() => ({
+                  margin: '2em auto',
+                  maxWidth: 780,
+                  textAlign: 'center',
+                  width: '100%',
+                })}
+              >
+                <Title order={2}>Dead Time</Title>
+                <Space h="sm" />
+                <Text>Currently no events are happening</Text>
+              </Card>
+            )}
+          </Box>
+        </>
       </Layout>
     </>
   );

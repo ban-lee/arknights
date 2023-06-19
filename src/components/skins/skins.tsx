@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Grid, Group, Text } from '@mantine/core';
+import { Box, Grid, Group, Text, Title } from '@mantine/core';
 import { Prisma } from '@prisma/client';
 import { Skin } from './skin';
 
@@ -20,67 +20,58 @@ interface SkinsProps {
 
 export function Skins({ freeSkin, newSkins, rerunSkins, fashionReview }: SkinsProps) {
   return (
-    <Grid align="center">
+    <Box
+      sx={{
+        textAlign: 'center',
+
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '1em',
+      }}
+    >
       {freeSkin && (
         <>
-          <Grid.Col span={3}>
-            <Text weight="bold">Free Skin</Text>
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <Skin skin={freeSkin} />
-          </Grid.Col>
+          <Title order={3}>Free Skin</Title>
+          <Skin skin={freeSkin} />
         </>
       )}
       {newSkins.length > 0 && (
         <>
-          <Grid.Col span={3}>
-            <Text weight="bold">New Skins</Text>
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <Group>
-              {newSkins.map((skin) => (
-                <Skin
-                  key={skin.id}
-                  skin={skin}
-                />
-              ))}
-            </Group>
-          </Grid.Col>
+          <Title order={3}>New Skins</Title>
+          <Group position="center">
+            {newSkins.map((skin) => (
+              <Skin
+                key={skin.id}
+                skin={skin}
+              />
+            ))}
+          </Group>
         </>
       )}
       {rerunSkins.length > 0 && (
         <>
-          <Grid.Col span={3}>
-            <Text weight="bold">Rerun Skins</Text>
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <Group>
-              {rerunSkins.map((skin) => (
-                <Skin
-                  key={skin.id}
-                  skin={skin}
-                />
-              ))}
-            </Group>
-          </Grid.Col>
+          <Title order={3}>Rerun Skins</Title>
+          <Group position="center">
+            {rerunSkins.map((skin) => (
+              <Skin
+                key={skin.id}
+                skin={skin}
+              />
+            ))}
+          </Group>
         </>
       )}
       {fashionReview && (
         <>
-          <Grid.Col span={3}>
-            <Text weight="bold"></Text>
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <Image
-              src="/ui/fashion_review-cropped.png"
-              alt="Rhodes Fashion Review"
-              width={452}
-              height={115}
-            />
-            {/* <Text weight="bold">Rhodes Fashion Review</Text> */}
-          </Grid.Col>
+          <Image
+            src="/ui/fashion_review-cropped.png"
+            alt="Rhodes Fashion Review"
+            width={452}
+            height={115}
+          />
         </>
       )}
-    </Grid>
+    </Box>
   );
 }

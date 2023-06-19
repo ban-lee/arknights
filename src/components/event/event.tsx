@@ -1,12 +1,11 @@
 import Image from 'next/image';
-import { Card, Divider, Grid, Text, Title, useMantineTheme } from '@mantine/core';
+import { Box, Card, Divider, Title, useMantineTheme } from '@mantine/core';
 import { CloudinaryImage, FullEvent } from '@/types/keystone-types';
 import { EventDate } from './event-date';
 import { Materials } from '@/components/materials';
 import { Operators } from '@/components/operators';
 import { Skins } from '@/components/skins';
 import { smallOrMore } from '@/utils/media-query';
-import { useRef } from 'react';
 import { useTopColour } from '@/hooks/useTopColour';
 
 interface EventProps {
@@ -18,12 +17,11 @@ export function Event({ event, isPriority }: EventProps) {
   const theme = useMantineTheme();
   const [headerBgColour, headerFontColour] = useTopColour(event.topColour);
 
-  const hasOperators = useRef(event.freeOp || event.bannerOp.length > 0).current;
-  const hasSkins = useRef(event.freeSkin || event.newSkin.length > 0 || event.rerunSkin.length > 0).current;
+  const hasOperators = event.freeOp || event.bannerOp.length > 0;
+  const hasSkins = event.freeSkin || event.newSkin.length > 0 || event.rerunSkin.length > 0;
   return (
     <Card
       sx={{
-        marginInline: '2em',
         maxWidth: 780,
         width: '100%',
       }}
@@ -75,46 +73,34 @@ export function Event({ event, isPriority }: EventProps) {
           enEnd={event.enEnd}
         />
       </Card.Section>
-      <Grid align="center">
+      <Card.Section pb="2em">
         {event.materials.length > 0 && (
           <>
-            <Grid.Col span={3}>
-              <Text weight="bold">Farming Materials</Text>
-            </Grid.Col>
-            <Grid.Col span={9}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em' }}>
+              <Title order={3}>Farming Materials</Title>
               <Materials materials={event.materials} />
-            </Grid.Col>
+            </Box>
+
+            {(hasOperators || hasSkins) && <Divider my={'1em'} />}
           </>
         )}
         {hasOperators && (
-          <>
-            <Grid.Col span={12}>
-              <Operators
-                freeOp={event.freeOp}
-                newOps={event.bannerOp}
-                bannerType={event.bannerType}
-              />
-            </Grid.Col>
-          </>
+          <Operators
+            freeOp={event.freeOp}
+            newOps={event.bannerOp}
+            bannerType={event.bannerType}
+          />
         )}
-        {hasOperators && hasSkins && (
-          <Grid.Col span={12}>
-            <Divider />
-          </Grid.Col>
-        )}
+        {hasOperators && hasSkins && <Divider my={'1em'} />}
         {hasSkins && (
-          <>
-            <Grid.Col span={12}>
-              <Skins
-                freeSkin={event.freeSkin}
-                newSkins={event.newSkin}
-                rerunSkins={event.rerunSkin}
-                fashionReview={event.fashionReview}
-              />
-            </Grid.Col>
-          </>
+          <Skins
+            freeSkin={event.freeSkin}
+            newSkins={event.newSkin}
+            rerunSkins={event.rerunSkin}
+            fashionReview={event.fashionReview}
+          />
         )}
-      </Grid>
+      </Card.Section>
     </Card>
   );
 }
