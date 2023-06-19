@@ -1,5 +1,5 @@
 import { Box, Card, Center, Space, Text, Title } from '@mantine/core';
-import { Event as EventComponent } from '@/components/event';
+import { EventSummary } from '@/components/event/event-summary';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
 import { prisma } from '@/utils/prisma';
@@ -10,7 +10,11 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
   return (
     <>
       <Layout title={'Karlan Tools'}>
-        <Box py={32}>
+        <Box
+          sx={{
+            padding: '3em 2em',
+          }}
+        >
           <Title
             order={1}
             align="center"
@@ -20,19 +24,28 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
           <Space h="xl" />
 
           {hasRunningEvent && (
-            <Center>
-              <EventComponent
-                event={events[0]}
-                isPriority={true}
-              />
-            </Center>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '2em',
+              }}
+            >
+              {events.map((event) => (
+                <EventSummary
+                  key={event.id}
+                  event={event}
+                />
+              ))}
+            </Box>
           )}
           {!hasRunningEvent && (
             <Card
               py={50}
               sx={() => ({
                 margin: '2em auto',
-                maxWidth: 600,
+                maxWidth: 780,
                 textAlign: 'center',
                 width: '100%',
               })}
@@ -64,7 +77,6 @@ async function getRunningEvent() {
         // Event that hasn't ended in global.
         enEnd: { gte: new Date().toISOString() },
       },
-      take: 1,
     })
     .then((events) => {
       for (const event of events) {

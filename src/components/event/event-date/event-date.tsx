@@ -8,7 +8,6 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(RelativeTime);
 
 interface EventDateProps {
-  cnStart: Date | null;
   estimatedStart: Date | null;
   enStart: Date | null;
   enEnd: Date | null;
