@@ -1,25 +1,26 @@
-import { Anchor, createStyles, CSSObject, Group, MantineTheme, Text, ThemeIcon } from '@mantine/core';
-import { Link } from '@/types/app-types';
-import { mediumScreenSize } from '@/utils/media-query';
+import Link from 'next/link';
+import { createStyles, CSSObject, Group, MantineTheme, Text, ThemeIcon } from '@mantine/core';
+import { Link as LinkType } from '@/types/app-types';
 import { useRouter } from 'next/router';
 
 interface SimpleLinkProps {
-  link: Link;
+  link: LinkType;
 }
 
 export function linkCss(theme: MantineTheme): CSSObject {
   return {
     cursor: 'pointer',
+    fontWeight: 500,
+    letterSpacing: 1,
     textDecoration: 'none',
 
     '&.selected': {
+      background: '#601E06',
       fontWeight: 600,
-      backgroundColor: theme.colors.gray[8],
     },
 
-    '&:hover': {
-      backgroundColor: theme.colors.gray[9],
-      textDecoration: 'none',
+    '&:hover, &:focus': {
+      background: '#601E06',
     },
   };
 }
@@ -33,10 +34,6 @@ const useStyles = createStyles((theme) => ({
   },
   subLinkText: {
     fontFamily: 'Montserrat, sans-serif',
-
-    [`@media ${mediumScreenSize(theme)}`]: {
-      fontSize: theme.fontSizes.xs,
-    },
   },
 }));
 
@@ -47,18 +44,22 @@ export function SimpleLink({ link }: SimpleLinkProps) {
   const isSelected = router.route === link.url;
 
   return (
-    <Anchor
+    <Link
       className={`${classes.subLink} ${isSelected ? 'selected' : ''}`}
-      href={link.url}
+      css={(theme) => ({ color: (theme as MantineTheme).colors.yellow[7] })}
+      href={link.url!}
     >
       <Group>
         {!!link.icon && (
-          <ThemeIcon size="sm">
+          <ThemeIcon
+            size="sm"
+            color="yellow.7"
+          >
             <i className={`bi ${link.icon}`}></i>
           </ThemeIcon>
         )}
         <Text className={classes.subLinkText}>{link.label}</Text>
       </Group>
-    </Anchor>
+    </Link>
   );
 }

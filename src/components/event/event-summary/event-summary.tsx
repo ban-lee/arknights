@@ -1,27 +1,22 @@
 import Image from 'next/image';
-import { Box, Card, Divider, Title, useMantineTheme } from '@mantine/core';
+import { Card, Title, useMantineTheme } from '@mantine/core';
 import { CloudinaryImage, FullEvent } from '@/types/keystone-types';
-import { EventDate } from './event-date';
-import { Materials } from '@/components/materials';
-import { Operators } from '@/components/operators';
-import { Skins } from '@/components/skins';
+import { EventDate } from '../event-date';
 import { smallOrMore } from '@/utils/media-query';
 import { useTopColour } from '@/hooks/useTopColour';
 
-interface EventProps {
+interface Props {
   event: FullEvent;
-  isPriority: boolean;
 }
 
-export function Event({ event, isPriority }: EventProps) {
+export function EventSummary({ event }: Props) {
   const theme = useMantineTheme();
   const [headerBgColour, headerFontColour] = useTopColour(event.topColour);
 
-  const hasOperators = event.freeOp || event.bannerOp.length > 0;
-  const hasSkins = event.freeSkin || event.newSkin.length > 0 || event.rerunSkin.length > 0;
   return (
     <Card
       sx={{
+        marginInline: '2em',
         maxWidth: 780,
         width: '100%',
       }}
@@ -48,7 +43,7 @@ export function Event({ event, isPriority }: EventProps) {
               100vw
             `}
             alt={`${event.name} event banner`}
-            priority={isPriority}
+            priority={true}
           />
         </Card.Section>
       )}
@@ -72,34 +67,6 @@ export function Event({ event, isPriority }: EventProps) {
           enStart={event.enStart}
           enEnd={event.enEnd}
         />
-      </Card.Section>
-      <Card.Section pb="2em">
-        {event.materials.length > 0 && (
-          <>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1em' }}>
-              <Title order={3}>Farming Materials</Title>
-              <Materials materials={event.materials} />
-            </Box>
-
-            {(hasOperators || hasSkins) && <Divider my={'1em'} />}
-          </>
-        )}
-        {hasOperators && (
-          <Operators
-            freeOp={event.freeOp}
-            newOps={event.bannerOp}
-            bannerType={event.bannerType}
-          />
-        )}
-        {hasOperators && hasSkins && <Divider my={'1em'} />}
-        {hasSkins && (
-          <Skins
-            freeSkin={event.freeSkin}
-            newSkins={event.newSkin}
-            rerunSkins={event.rerunSkin}
-            fashionReview={event.fashionReview}
-          />
-        )}
       </Card.Section>
     </Card>
   );

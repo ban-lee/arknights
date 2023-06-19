@@ -1,6 +1,6 @@
+import { Box, Group, Text, Title } from '@mantine/core';
 import { EventBannerTypeType, Operator } from '@prisma/client';
 import { getBannerTypeLabel } from '@/utils/operator';
-import { Grid, Group, Text } from '@mantine/core';
 import { Operator as OperatorComponent } from './operator';
 import { useRef } from 'react';
 
@@ -14,37 +14,40 @@ export function Operators({ newOps, freeOp, bannerType }: OperatorsProps) {
   const hasDivier = useRef(!!(newOps.length && freeOp)).current;
 
   return (
-    <Grid align="center">
+    <Box
+      sx={{
+        textAlign: 'center',
+
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '1em',
+      }}
+    >
       {newOps.length > 0 && (
         <>
-          <Grid.Col span={3}>
-            <Text weight="bold">Banner Operators</Text>
+          <div>
+            <Title order={3}>Banner Operators</Title>
             <Text>{getBannerTypeLabel(bannerType)}</Text>
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <Group>
-              {newOps.map((op) => {
-                return (
-                  <OperatorComponent
-                    key={op.id}
-                    operator={op}
-                  />
-                );
-              })}
-            </Group>
-          </Grid.Col>
+          </div>
+          <Group position="center">
+            {newOps.map((op) => {
+              return (
+                <OperatorComponent
+                  key={op.id}
+                  operator={op}
+                />
+              );
+            })}
+          </Group>
         </>
       )}
       {freeOp && (
         <>
-          <Grid.Col span={3}>
-            <Text weight="bold">Free Operator</Text>
-          </Grid.Col>
-          <Grid.Col span={9}>
-            <OperatorComponent operator={freeOp} />
-          </Grid.Col>
+          <Title order={3}>Free Operator</Title>
+          <OperatorComponent operator={freeOp} />
         </>
       )}
-    </Grid>
+    </Box>
   );
 }

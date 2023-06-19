@@ -1,30 +1,27 @@
-import { Collapse, createStyles, Group, Stack, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
+import Link from 'next/link';
+import { createStyles, Group, MantineTheme, Stack, Text, ThemeIcon } from '@mantine/core';
 import { GroupLink } from '@/types/app-types';
 import { linkCss, SimpleLink } from './simple-link';
-import { mediumScreenSize } from '@/utils/media-query';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface LinkGroupProps {
   link: GroupLink;
 }
 
 const useStyles = createStyles((theme) => ({
+  groupHeader: {
+    cursor: 'default',
+    padding: '12px 16px',
+  },
   groupLink: {
     ...linkCss(theme),
     padding: '12px 16px',
   },
-  groupLinkText: {
+  text: {
     flex: '1 1',
     fontFamily: 'Montserrat, sans-serif',
-
-    [`@media ${mediumScreenSize(theme)}`]: {
-      fontSize: theme.fontSizes.sm,
-    },
-  },
-  groupLinkChevron: {
-    height: 24,
-    width: 24,
-    lineHeight: '24px',
+    fontWeight: 600,
+    letterSpacing: 1,
   },
   subNav: {
     borderLeft: '1px solid',
@@ -34,54 +31,61 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export function GroupLink({ link }: LinkGroupProps) {
+  const router = useRouter();
   const { classes } = useStyles();
 
-  const isLink = !!link.url;
   const hasSubLinks = !!link.links?.length;
-  const [opened, setOpened] = useState(link.initiallyOpened || false);
+
+  function getInternal() {
+    return (
+      <Group noWrap>
+        {!!link.icon && (
+          <ThemeIcon
+            p={16}
+            color="yellow.7"
+          >
+            <i className={`bi ${link.icon}`}></i>
+          </ThemeIcon>
+        )}
+        <Text className={classes.text}>{link.label}</Text>
+      </Group>
+    );
+  }
+
+  function getGroupHeader() {
+    return <div className={classes.groupHeader}>{getInternal()}</div>;
+  }
+
+  function getGroupLink() {
+    const isSelected = router.route === link.url;
+
+    return (
+      <Link
+        className={`${classes.groupLink} ${isSelected ? 'selected' : ''}`}
+        css={(theme) => ({ color: (theme as MantineTheme).colors.yellow[7] })}
+        href={link.url!}
+      >
+        {getInternal()}
+      </Link>
+    );
+  }
 
   return (
     <>
-      <UnstyledButton
-        className={classes.groupLink}
-        component={isLink ? 'a' : 'button'}
-        href={isLink ? link.url : undefined}
-        sx={(theme) => ({ color: !!link.url ? theme.colors.blue[4] : undefined })}
-        onClick={() => {
-          if (isLink) return;
-
-          setOpened((o) => !o);
-        }}
-      >
-        <Group noWrap>
-          {!!link.icon && (
-            <ThemeIcon p={16}>
-              <i className={`bi ${link.icon}`}></i>
-            </ThemeIcon>
-          )}
-          <Text className={classes.groupLinkText}>{link.label}</Text>
-          {hasSubLinks && (
-            <div className={classes.groupLinkChevron}>
-              <i className={`bi ${opened ? 'bi-chevron-down' : 'bi-chevron-right'}`}></i>
-            </div>
-          )}
-        </Group>
-      </UnstyledButton>
+      {hasSubLinks ? getGroupHeader() : getGroupLink()}
       {hasSubLinks && (
-        <Collapse in={opened}>
-          <Stack
-            spacing={0}
-            justify="center"
-            className={classes.subNav}
-          >
-            {(link.links ?? []).map((link, index) => (
-              <SimpleLink
-                key={index}
-                link={link}
-              />
-            ))}
-          </Stack>
-        </Collapse>
+        <Stack
+          spacing={0}
+          justify="center"
+          className={classes.subNav}
+        >
+          {(link.links ?? []).map((link, index) => (
+            <SimpleLink
+              key={index}
+              link={link}
+            />
+          ))}
+        </Stack>
       )}
     </>
   );

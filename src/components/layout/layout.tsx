@@ -31,10 +31,8 @@ const useStyles = createStyles((theme) => ({
     flex: '1 1 auto',
   },
   scroll: {
-    width: '100%',
-
     [`@media ${lessThanSmall(theme)}`]: {
-      height: 'calc(100vh - 100px)',
+      height: 'calc(100vh - 80px)',
     },
 
     [`@media ${smallOrMore(theme)}`]: {

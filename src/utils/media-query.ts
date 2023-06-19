@@ -1,7 +1,7 @@
 import { em, getBreakpointValue, MantineTheme } from '@mantine/styles';
 
 export function lessThanSmall(theme: MantineTheme) {
-  return `(max-width: ${em(getBreakpointValue(theme.breakpoints.sm) - 1)})`;
+  return `(max-width: ${em(getBreakpointValue(theme.breakpoints.md) - 1)})`;
 }
 
 export function lessThanLarge(theme: MantineTheme) {
@@ -9,16 +9,9 @@ export function lessThanLarge(theme: MantineTheme) {
 }
 
 export function smallOrMore(theme: MantineTheme) {
-  return `(min-width: ${em(getBreakpointValue(theme.breakpoints.sm))})`;
+  return `(min-width: ${em(getBreakpointValue(theme.breakpoints.md))})`;
 }
 
 export function largeOrMore(theme: MantineTheme) {
   return `(min-width: ${em(getBreakpointValue(theme.breakpoints.lg))})`;
-}
-
-export function mediumScreenSize(theme: MantineTheme) {
-  return (
-    `(min-width: ${em(getBreakpointValue(theme.breakpoints.sm))}) and ` +
-    `(max-width: ${em(getBreakpointValue(theme.breakpoints.lg) - 1)})`
-  );
 }

@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+
 export interface CloudinaryImageMeta {
   url: string;
   etag: string;
@@ -29,3 +31,16 @@ export interface CloudinaryImage {
   mimetype: string;
   originalFilename: string;
 }
+
+const fullEvent = Prisma.validator<Prisma.EventArgs>()({
+  include: {
+    materials: true,
+    freeOp: true,
+    bannerOp: true,
+    newSkin: { include: { operator: true } },
+    freeSkin: { include: { operator: true } },
+    rerunSkin: { include: { operator: true } },
+  },
+});
+
+export type FullEvent = Prisma.EventGetPayload<typeof fullEvent>;

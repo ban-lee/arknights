@@ -6,19 +6,33 @@ import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   header: {
-    position: 'relative',
-
     [`@media ${smallOrMore(theme)}`]: {
       display: 'none',
     },
   },
   headerGroup: {
+    background: '#872A08',
     height: '100%',
     paddingLeft: 8,
     paddingRight: 16,
+    position: 'relative',
+    zIndex: 1000,
   },
   menu: {
-    position: 'absolute',
+    background: '#872A08',
+    bottom: '100%',
+    left: 0,
+    right: 0,
+    top: 0,
+    position: 'fixed',
+    transform: 'translateY(-100%)',
+    transition: 'transform 250ms',
+    zIndex: 999,
+  },
+
+  open: {
+    top: 80,
+    transform: 'translateY(0)',
   },
 }));
 
@@ -31,6 +45,7 @@ export function Header() {
       <MantineHeader
         height={80}
         className={classes.header}
+        withBorder={false}
       >
         <Group
           className={classes.headerGroup}
@@ -45,10 +60,7 @@ export function Header() {
             onClick={() => setOpened((opened) => !opened)}
           />
         </Group>
-        <Navbar
-          className={classes.menu}
-          display={opened ? 'block' : 'none'}
-        >
+        <Navbar className={`${classes.menu} ${opened ? classes.open : ''}`}>
           <Navbar.Section>
             <Navigation />
           </Navbar.Section>

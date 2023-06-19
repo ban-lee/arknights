@@ -150,7 +150,6 @@ export function MaterialsTable({ events, materials }: Props) {
                   </Text>
                   <Box className={`text`}>
                     <EventDate
-                      cnStart={null}
                       estimatedStart={row.event.estimatedStart}
                       enStart={row.event.enStart}
                       enEnd={row.event.enEnd}
