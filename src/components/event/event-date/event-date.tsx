@@ -1,8 +1,7 @@
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import RelativeTime from 'dayjs/plugin/relativeTime';
-import { Box, Text, useMantineTheme } from '@mantine/core';
-import { smallOrMore } from '@/utils/media-query';
+import { Box, Text } from '@mantine/core';
 import { useRef } from 'react';
 
 dayjs.extend(LocalizedFormat);
@@ -15,7 +14,6 @@ interface EventDateProps {
 }
 
 export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
-  const theme = useMantineTheme();
   const estimatedDate = useRef<dayjs.Dayjs | undefined>(estimatedStart ? dayjs(estimatedStart) : undefined).current;
   const enStartDate = useRef<dayjs.Dayjs | undefined>(enStart ? dayjs(enStart) : undefined).current;
   const enEndDate = useRef<dayjs.Dayjs | undefined>(enEnd ? dayjs(enEnd) : undefined).current;
@@ -35,14 +33,6 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
         `,
         alignItems: 'center',
         justifyContent: 'center',
-
-        [`@media ${smallOrMore(theme)}`]: {
-          gridTemplateColumns: '1em 1fr 1fr 1em',
-          gridTemplateAreas: `
-            ". date info ."
-          `,
-          columnGap: '1.5em',
-        },
       }}
     >
       {shouldShowTentativeDate && (
@@ -51,9 +41,6 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
             sx={{
               gridArea: 'date',
               textAlign: 'center',
-              [`@media ${smallOrMore(theme)}`]: {
-                textAlign: 'right',
-              },
             }}
           >
             <strong css={{ marginRight: '2em' }}>Tentative Date</strong>
@@ -63,9 +50,6 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
             sx={{
               gridArea: 'info',
               textAlign: 'center',
-              [`@media ${smallOrMore(theme)}`]: {
-                textAlign: 'left',
-              },
             }}
           >
             (starts {dayjs().to(estimatedDate)})
@@ -78,10 +62,6 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
             sx={{
               gridArea: 'date',
               textAlign: 'center',
-
-              [`@media ${smallOrMore(theme)}`]: {
-                textAlign: 'right',
-              },
             }}
           >
             {enStartDate.format('ll')}
@@ -97,9 +77,6 @@ export function EventDate({ enStart, enEnd, estimatedStart }: EventDateProps) {
             sx={{
               gridArea: 'info',
               textAlign: 'center',
-              [`@media ${smallOrMore(theme)}`]: {
-                textAlign: 'left',
-              },
             }}
           >
             {!isStarted && <>(starts {dayjs().to(enStartDate)})</>}
