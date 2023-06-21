@@ -37,6 +37,7 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
               alignItems: 'center',
               gap: '3em',
             }}
+            w={{ base: '100vw', sm: '100%' }}
           >
             {events.map((event, index) => {
               return (
