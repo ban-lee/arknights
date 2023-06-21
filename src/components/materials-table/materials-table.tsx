@@ -173,25 +173,25 @@ export function MaterialsTable({ events, materials }: Props) {
             {displayRows.map((row) => {
               return (
                 <tr key={row.event.id}>
-                  {row.materialIndices.map((value, index) => {
-                    if (!displayCols[index]) return <></>;
-
-                    const mat = materials[index];
-                    return (
-                      <td
-                        key={mat.id}
-                        className={classes.materialCell}
-                      >
-                        <Group
-                          align="center"
-                          position="center"
-                          aria-label={`Material dropped during ${row.event.name}`}
+                  {row.materialIndices
+                    .filter((v, index) => displayCols[index])
+                    .map((value, index) => {
+                      const mat = materials[index];
+                      return (
+                        <td
+                          key={mat.id}
+                          className={classes.materialCell}
                         >
-                          {value && <MaterialComponent material={mat} />}
-                        </Group>
-                      </td>
-                    );
-                  })}
+                          <Group
+                            align="center"
+                            position="center"
+                            aria-label={`Material dropped during ${row.event.name}`}
+                          >
+                            {value && <MaterialComponent material={mat} />}
+                          </Group>
+                        </td>
+                      );
+                    })}
                 </tr>
               );
             })}
