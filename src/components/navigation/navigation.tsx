@@ -7,11 +7,15 @@ const links: GroupLink[] = [
   {
     label: 'Upcoming',
     icon: 'bi-calendar-fill',
-    initiallyOpened: true,
     links: [
       { label: 'Events', url: '/upcoming-events' },
       { label: 'Farming Materials', url: '/upcoming-materials' },
     ],
+  },
+  {
+    label: 'Skins',
+    icon: 'bi-person-fill',
+    url: '/skins',
   },
 ];
 

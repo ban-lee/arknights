@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Box, Grid, Group, Text, Title } from '@mantine/core';
+import { Box, Group, Title } from '@mantine/core';
 import { Prisma } from '@prisma/client';
 import { Skin } from './skin';
 

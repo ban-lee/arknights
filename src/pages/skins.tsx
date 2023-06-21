@@ -1,21 +1,24 @@
 import { Group } from '@mantine/core';
 import { InferGetServerSidePropsType } from 'next';
+import { Layout } from '@/components/layout';
 import { PrismaClient } from '@prisma/client';
 import { Skin } from '@/components/skins';
 
 export default function Skins({ skins }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Group
-      my={20}
-      position="center"
-    >
-      {skins.map((skin) => (
-        <Skin
-          key={skin.id}
-          skin={skin}
-        />
-      ))}
-    </Group>
+    <Layout title={'Skins - Karlan Tools'}>
+      <Group
+        m="3em 1em"
+        position="center"
+      >
+        {skins.map((skin) => (
+          <Skin
+            key={skin.id}
+            skin={skin}
+          />
+        ))}
+      </Group>
+    </Layout>
   );
 }
 
