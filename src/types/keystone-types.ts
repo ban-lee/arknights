@@ -44,3 +44,18 @@ const fullEvent = Prisma.validator<Prisma.EventArgs>()({
 });
 
 export type FullEvent = Prisma.EventGetPayload<typeof fullEvent>;
+
+const materialEvent = Prisma.validator<Prisma.EventArgs>()({
+  select: {
+    id: true,
+    name: true,
+    estimatedStart: true,
+    enStart: true,
+    enEnd: true,
+    headerImg: true,
+    topColour: true,
+    materials: true,
+  },
+});
+
+export type MaterialEvent = Prisma.EventGetPayload<typeof materialEvent>;
