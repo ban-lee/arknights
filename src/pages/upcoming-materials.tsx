@@ -1,35 +1,74 @@
-import { Box, Space, Text, Title } from '@mantine/core';
+import { Box, Title } from '@mantine/core';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
-import { MaterialsTable } from '@/components/materials-table';
+import { Material } from '@/components/materials/material';
+import { MaterialTimeline } from '@/components/material-timeline';
 import { prisma } from '@/utils/prisma';
 
-export default function Home({ events, materials }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Mats({ events, materials }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const lastKnownEvent = events[events.length - 1];
+  const maxMonth = (lastKnownEvent.enStart ?? lastKnownEvent.estimatedStart)!.getMonth();
+
   return (
-    <>
-      <Layout title={'Karlan Tools: Upcoming Farming Materials'}>
-        <Box py={32}>
-          <Title align="center">Upcoming Farming Materials</Title>
-          <Space h="xl" />
-          <Text
-            align="center"
+    <Layout title={'Karlan Tools: Upcoming Farming Materials'}>
+      <>
+        <Title
+          sx={{
+            textAlign: 'center',
+            marginBlock: '1.5em 0.75em',
+          }}
+        >
+          Upcoming Farming Events
+        </Title>
+        <Box
+          sx={{
+            margin: '0 auto 2em',
+            maxWidth: 780,
+            padding: '0 1em',
+
+            display: 'flex',
+            gap: '1em',
+          }}
+        >
+          <Box
             sx={{
-              maxWidth: 800,
-              margin: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5em',
             }}
           >
-            Tentative start dates powered by hopes and dreams.
-            <br />
-            Until announced officially by Yostar, it is all guess work.
-          </Text>
-          <Space h="xl" />
-          <MaterialsTable
-            events={events}
-            materials={materials}
-          />
+            {materials.map((mat) => {
+              return (
+                <Material
+                  key={mat.id}
+                  material={mat}
+                />
+              );
+            })}
+          </Box>
+          <Box
+            sx={{
+              flex: '1 1',
+
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            {materials.map((mat) => {
+              return (
+                <MaterialTimeline
+                  key={mat.id}
+                  matId={mat.id}
+                  events={events}
+                  maxMonth={maxMonth}
+                />
+              );
+            })}
+          </Box>
         </Box>
-      </Layout>
-    </>
+      </>
+    </Layout>
   );
 }
 
@@ -43,6 +82,7 @@ async function getEvents() {
       enStart: true,
       enEnd: true,
       headerImg: true,
+      topColour: true,
       materials: true,
     },
     where: {

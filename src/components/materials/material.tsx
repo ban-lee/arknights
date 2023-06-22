@@ -20,8 +20,8 @@ export function Material({ material }: MaterialProps) {
         src={getBgUrl(material.rarity)}
         sx={{
           height: 60,
-          maxWidth: 60,
-          width: 60,
+          maxWidth: 50,
+          width: 50,
           display: 'flex',
           alignContent: 'center',
           justifyContent: 'center',
