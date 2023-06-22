@@ -1,8 +1,8 @@
-import Head from 'next/head';
 import { createStyles, ScrollArea } from '@mantine/core';
 import { Header } from './header';
 import { lessThanSmall, smallOrMore } from '@/utils/media-query';
 import { Sidebar } from './sidebar';
+import { useEffect } from 'react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -31,30 +31,20 @@ const useStyles = createStyles((theme) => ({
 
 export function Layout({ children, title }: LayoutProps) {
   const { classes } = useStyles();
+
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta
-          name="description"
-          content="Upcoming Arknight events information."
-        />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1"
-        />
-        <link
-          rel="icon"
-          href="/favicon.ico"
-        />
-      </Head>
       <div className={classes.container}>
         <div className={classes.navigation}>
           <Header />
           <Sidebar />
         </div>
         <main css={{ flex: '1 1 auto' }}>
-          <ScrollArea h={{ base: 'calc(100vh - 80px)', sm: '100vh' }}>{children}</ScrollArea>
+          <ScrollArea h={{ base: 'calc(100vh - 80px)', md: '100vh' }}>{children}</ScrollArea>
         </main>
       </div>
     </>

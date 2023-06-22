@@ -20,7 +20,7 @@ export function Sidebar() {
     <>
       <Navbar
         className={classes.navbar}
-        width={{ sm: 300 }}
+        width={{ md: 300 }}
         withBorder={false}
       >
         <Navbar.Section

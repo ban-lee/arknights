@@ -11,6 +11,14 @@ export default class _Document extends Document {
       <Html>
         <Head>
           <link
+            rel="icon"
+            href="/favicon.ico"
+          />
+          <meta
+            name="description"
+            content="Upcoming Arknight events information."
+          />
+          <link
             rel="preconnect"
             href="https://fonts.googleapis.com"
           />
