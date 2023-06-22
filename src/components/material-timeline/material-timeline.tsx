@@ -1,30 +1,12 @@
 import { Box } from '@mantine/core';
 import { MaterialEvent } from '@/types/keystone-types';
 import { nanoid } from 'nanoid';
+import { Pip, PIP_SIZE } from './pip';
 
 interface Props {
   matId: string;
   events: MaterialEvent[];
   maxMonth: number;
-}
-
-const DOT_SIZE = 24;
-
-function EventDot({ event }: { event: MaterialEvent }) {
-  return (
-    <Box
-      sx={{
-        background: event.topColour,
-        borderRadius: 24,
-        height: DOT_SIZE,
-        width: DOT_SIZE,
-
-        textAlign: 'center',
-      }}
-    >
-      {(event.estimatedStart || event.enStart)!.getMonth()}
-    </Box>
-  );
 }
 
 /**
@@ -69,7 +51,7 @@ export function MaterialTimeline({ matId, events, maxMonth }: Props) {
   }
 
   function generateGridColumns() {
-    return timelineOffset.map(() => `${DOT_SIZE}px`).join(' minmax(0.5em, 1fr) ');
+    return timelineOffset.map(() => `${PIP_SIZE}px`).join(' minmax(0.5em, 1fr) ');
   }
 
   return (
@@ -115,7 +97,7 @@ export function MaterialTimeline({ matId, events, maxMonth }: Props) {
               justifyContent: 'center',
             }}
           >
-            {event && <EventDot event={event} />}
+            {event && <Pip event={event} />}
           </Box>
         );
       })}

@@ -1,8 +1,9 @@
-import { Box, Title } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
 import { Material } from '@/components/materials/material';
 import { MaterialTimeline } from '@/components/material-timeline';
+import { PageTitle } from '@/components/page-title';
 import { prisma } from '@/utils/prisma';
 
 export default function Mats({ events, materials }: InferGetServerSidePropsType<typeof getServerSideProps>) {
@@ -12,14 +13,18 @@ export default function Mats({ events, materials }: InferGetServerSidePropsType<
   return (
     <Layout title={'Karlan Tools: Upcoming Farming Materials'}>
       <>
-        <Title
+        <PageTitle title="Upcoming Farming Events" />
+        <Text
           sx={{
+            maxWidth: 800,
+            margin: '0 auto 2em',
             textAlign: 'center',
-            marginBlock: '1.5em 0.75em',
           }}
         >
-          Upcoming Farming Events
-        </Title>
+          Tentative start dates powered by hopes and dreams.
+          <br />
+          Until announced officially by Yostar, it is all guess work.
+        </Text>
         <Box
           sx={{
             margin: '0 auto 2em',
