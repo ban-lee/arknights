@@ -1,5 +1,5 @@
-import { ActionIcon, Popover } from '@mantine/core';
 import { MaterialEvent } from '@/types/keystone-types';
+import { Popover, UnstyledButton } from '@mantine/core';
 import { Summary } from '../summary';
 import { useDisclosure } from '@mantine/hooks';
 import { useTopColour } from '@/hooks/useTopColour';
@@ -16,19 +16,21 @@ export function Pip({ event }: { event: MaterialEvent }) {
       opened={opened}
     >
       <Popover.Target>
-        <ActionIcon
+        <UnstyledButton
+          aria-label={`${event.name} info`}
           sx={{
             background: bgColour,
+            borderRadius: PIP_SIZE / 2,
             color: fontColour,
+            height: PIP_SIZE,
+            textAlign: 'center',
+            width: PIP_SIZE,
           }}
           variant="transparent"
-          radius="xl"
-          size={PIP_SIZE}
-          onMouseEnter={open}
-          onMouseLeave={close}
           onKeyDown={(event) => {
             switch (event.key) {
               case 'Escape':
+              case 'Tab':
                 close();
                 break;
               case ' ':
@@ -38,12 +40,11 @@ export function Pip({ event }: { event: MaterialEvent }) {
                 break;
             }
           }}
-          onBlur={close}
-          onClick={() => (opened ? close() : open())}
-          aria-label={`${event.name} info`}
+          onMouseEnter={open}
+          onMouseLeave={close}
         >
           <i className="bi bi-info"></i>
-        </ActionIcon>
+        </UnstyledButton>
       </Popover.Target>
       <Popover.Dropdown
         p={0}

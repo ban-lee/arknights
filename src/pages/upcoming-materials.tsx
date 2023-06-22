@@ -1,23 +1,61 @@
 import { Box, Text } from '@mantine/core';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
-import { Material } from '@/components/materials/material';
+import { Material as MaterialComponent } from '@/components/materials';
+import { Material } from '@prisma/client';
+import { MaterialEvent } from '@/types/keystone-types';
 import { MaterialTimeline } from '@/components/material-timeline';
 import { PageTitle } from '@/components/page-title';
 import { prisma } from '@/utils/prisma';
 
+interface TimelineInfo {
+  material: Material;
+  // Only contains entries for events that drop the material
+  events: MaterialEvent[];
+}
+
+function generateTimelines(events: MaterialEvent[], materials: Material[]) {
+  const newTimelines: TimelineInfo[] = [];
+
+  for (let i = 0; i < events.length; i++) {
+    const event = events[i];
+
+    for (const eventDrop of event.materials) {
+      const existingTimeline = newTimelines.find((tl) => tl.material.id === eventDrop.id);
+
+      if (existingTimeline) {
+        existingTimeline.events[i] = event;
+      } else {
+        const tlMat = materials.find((mat) => mat.id === eventDrop.id)!;
+        const tlEvents: MaterialEvent[] = new Array(events.length);
+        tlEvents[i] = event;
+
+        newTimelines.push({ material: tlMat, events: tlEvents });
+      }
+    }
+  }
+
+  for (const material of materials) {
+    const inTimeline = newTimelines.some((tl) => tl.material.id === material.id);
+    if (inTimeline) continue;
+
+    newTimelines.push({ material, events: new Array(events.length) });
+  }
+
+  return newTimelines;
+}
+
 export default function Mats({ events, materials }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const lastKnownEvent = events[events.length - 1];
-  const maxMonth = (lastKnownEvent.enStart ?? lastKnownEvent.estimatedStart)!.getMonth();
+  const timelines: TimelineInfo[] = generateTimelines(events, materials);
 
   return (
     <Layout title={'Karlan Tools: Upcoming Farming Materials'}>
       <>
-        <PageTitle title="Upcoming Farming Events" />
+        <PageTitle title="Upcoming Events Drops" />
         <Text
           sx={{
             maxWidth: 800,
-            margin: '0 auto 2em',
+            margin: '0 auto 1.5em',
             textAlign: 'center',
           }}
         >
@@ -27,50 +65,27 @@ export default function Mats({ events, materials }: InferGetServerSidePropsType<
         </Text>
         <Box
           sx={{
-            margin: '0 auto 2em',
-            maxWidth: 780,
-            padding: '0 1em',
-
+            padding: '0 1em 2em',
             display: 'flex',
-            gap: '1em',
+            flexDirection: 'column',
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.5em',
-            }}
-          >
-            {materials.map((mat) => {
-              return (
-                <Material
-                  key={mat.id}
-                  material={mat}
-                />
-              );
-            })}
-          </Box>
-          <Box
-            sx={{
-              flex: '1 1',
+          {timelines.map((tl) => {
+            return (
+              <Box
+                key={tl.material.id}
+                sx={{
+                  maxWidth: 780,
 
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
-          >
-            {materials.map((mat) => {
-              return (
-                <MaterialTimeline
-                  key={mat.id}
-                  matId={mat.id}
-                  events={events}
-                  maxMonth={maxMonth}
-                />
-              );
-            })}
-          </Box>
+                  display: 'flex',
+                  gap: '1em',
+                }}
+              >
+                <MaterialComponent material={tl.material} />
+                <MaterialTimeline events={tl.events} />
+              </Box>
+            );
+          })}
         </Box>
       </>
     </Layout>
