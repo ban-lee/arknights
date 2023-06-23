@@ -17,6 +17,7 @@
     "@mantine/core": "^6.0.14",
     "@mantine/hooks": "^6.0.14",
     "@mantine/next": "^6.0.14",
+    "@mantine/nprogress": "^6.0.14",
     "@prisma/client": "^4.16.0",
     "axios": "^1.4.0",
     "bootstrap-icons": "^1.10.5",
