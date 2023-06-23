@@ -22,7 +22,6 @@ export function Event({ event, isPriority }: EventProps) {
   return (
     <Card
       sx={{
-        maxWidth: 780,
         width: '100%',
       }}
     >

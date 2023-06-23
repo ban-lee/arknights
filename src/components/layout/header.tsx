@@ -1,4 +1,4 @@
-import { Burger, createStyles, Group, Header as MantineHeader, Navbar } from '@mantine/core';
+import { Burger, createStyles, Group, Header as MantineHeader } from '@mantine/core';
 import { Navigation } from '@/components/navigation';
 import { SiteLogoHorizontal } from '@/components/site-logo';
 import { smallOrMore } from '@/utils/media-query';
@@ -6,6 +6,9 @@ import { useState } from 'react';
 
 const useStyles = createStyles((theme) => ({
   header: {
+    position: 'sticky',
+    top: 0,
+
     [`@media ${smallOrMore(theme)}`]: {
       display: 'none',
     },
@@ -13,21 +16,24 @@ const useStyles = createStyles((theme) => ({
   headerGroup: {
     background: '#872A08',
     height: '100%',
-    paddingLeft: 8,
-    paddingRight: 16,
+    padding: '0 2em 0 1em',
+
     position: 'relative',
     zIndex: 1000,
   },
   menu: {
     background: '#872A08',
+    height: '100%',
     bottom: '100%',
     left: 0,
+    position: 'fixed',
     right: 0,
     top: 0,
-    position: 'fixed',
+    width: '100%',
+    zIndex: 999,
+
     transform: 'translateY(-100%)',
     transition: 'transform 250ms',
-    zIndex: 999,
   },
 
   open: {
@@ -60,11 +66,9 @@ export function Header() {
             onClick={() => setOpened((opened) => !opened)}
           />
         </Group>
-        <Navbar className={`${classes.menu} ${opened ? classes.open : ''}`}>
-          <Navbar.Section>
-            <Navigation />
-          </Navbar.Section>
-        </Navbar>
+        <nav className={`${classes.menu} ${opened ? classes.open : ''}`}>
+          <Navigation />
+        </nav>
       </MantineHeader>
     </>
   );

@@ -7,7 +7,10 @@ import { prisma } from '@/utils/prisma';
 export default function Home({ events }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
-      <Layout title={'Karlan Tools: Upcoming AK Events'}>
+      <Layout
+        title={'Karlan Tools: Upcoming AK Events'}
+        centerMain
+      >
         <>
           <Title
             sx={{
@@ -20,7 +23,6 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
           <Text
             align="center"
             sx={{
-              maxWidth: 800,
               margin: '2em auto 1.75em',
             }}
           >

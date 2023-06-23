@@ -1,6 +1,7 @@
 import { Box, Text } from '@mantine/core';
 import { InferGetServerSidePropsType } from 'next';
 import { Layout } from '@/components/layout';
+import { lessThanSmall } from '@/utils/media-query';
 import { Material as MaterialComponent } from '@/components/materials';
 import { Material } from '@prisma/client';
 import { MaterialEvent } from '@/types/keystone-types';
@@ -49,12 +50,14 @@ export default function Mats({ events, materials }: InferGetServerSidePropsType<
   const timelines: TimelineInfo[] = generateTimelines(events, materials);
 
   return (
-    <Layout title={'Karlan Tools: Upcoming Farming Materials'}>
+    <Layout
+      title={'Karlan Tools: Upcoming Farming Materials'}
+      centerMain
+    >
       <>
         <PageTitle title="Upcoming Events Drops" />
         <Text
           sx={{
-            maxWidth: 800,
             margin: '0 auto 1.5em',
             textAlign: 'center',
           }}
@@ -64,19 +67,22 @@ export default function Mats({ events, materials }: InferGetServerSidePropsType<
           Until announced officially by Yostar, it is all guess work.
         </Text>
         <Box
-          sx={{
-            padding: '0 1em 2em',
+          sx={(theme) => ({
+            padding: '0 3em 2em',
+
             display: 'flex',
             flexDirection: 'column',
-          }}
+
+            [`@media ${lessThanSmall(theme)}`]: {
+              padding: '0 1em 2em',
+            },
+          })}
         >
           {timelines.map((tl) => {
             return (
               <Box
                 key={tl.material.id}
                 sx={{
-                  maxWidth: 780,
-
                   display: 'flex',
                   gap: '1em',
                 }}

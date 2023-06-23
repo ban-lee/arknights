@@ -16,8 +16,6 @@ export function EventSummary({ event }: Props) {
   return (
     <Card
       sx={{
-        marginInline: '2em',
-        maxWidth: 780,
         width: '100%',
       }}
     >

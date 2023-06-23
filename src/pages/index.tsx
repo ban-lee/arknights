@@ -9,7 +9,10 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
 
   return (
     <>
-      <Layout title={'Karlan Tools'}>
+      <Layout
+        title={'Karlan Tools'}
+        centerMain
+      >
         <>
           <Title
             sx={{
@@ -41,7 +44,6 @@ export default function Home({ events }: InferGetServerSidePropsType<typeof getS
                 py={50}
                 sx={() => ({
                   margin: '2em auto',
-                  maxWidth: 780,
                   textAlign: 'center',
                   width: '100%',
                 })}
