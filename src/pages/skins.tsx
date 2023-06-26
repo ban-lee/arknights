@@ -6,7 +6,10 @@ import { Skin } from '@/components/skins';
 
 export default function Skins({ skins }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <Layout title={'Skins - Karlan Tools'}>
+    <Layout
+      title={'Skins - Karlan Tools'}
+      centerMain
+    >
       <Group
         m="3em 1em"
         position="center"

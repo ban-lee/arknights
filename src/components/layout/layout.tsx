@@ -1,4 +1,4 @@
-import { createStyles, ScrollArea } from '@mantine/core';
+import { Box, createStyles, CSSObject } from '@mantine/core';
 import { Header } from './header';
 import { lessThanSmall, smallOrMore } from '@/utils/media-query';
 import { Sidebar } from './sidebar';
@@ -6,13 +6,13 @@ import { useEffect } from 'react';
 
 interface LayoutProps {
   children: React.ReactNode;
+  centerMain?: boolean;
   title: string;
 }
 
 const useStyles = createStyles((theme) => ({
   container: {
     display: 'flex',
-    width: '100%',
 
     [`@media ${lessThanSmall(theme)}`]: {
       flexDirection: 'column',
@@ -21,16 +21,11 @@ const useStyles = createStyles((theme) => ({
       flexDirection: 'row',
     },
   },
-  navigation: {
-    flex: '0 0 auto',
-    position: 'sticky',
-    left: 0,
-    zIndex: 2000,
-  },
 }));
 
-export function Layout({ children, title }: LayoutProps) {
+export function Layout({ children, centerMain, title }: LayoutProps) {
   const { classes } = useStyles();
+  const mainStyles: CSSObject = centerMain ? { marginInline: 'auto', maxWidth: 780 } : {};
 
   useEffect(() => {
     document.title = title;
@@ -39,12 +34,10 @@ export function Layout({ children, title }: LayoutProps) {
   return (
     <>
       <div className={classes.container}>
-        <div className={classes.navigation}>
-          <Header />
-          <Sidebar />
-        </div>
+        <Header />
+        <Sidebar />
         <main css={{ flex: '1 1 auto' }}>
-          <ScrollArea h={{ base: 'calc(100vh - 80px)', md: '100vh' }}>{children}</ScrollArea>
+          <Box sx={mainStyles}>{children}</Box>
         </main>
       </div>
     </>

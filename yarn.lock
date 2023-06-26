@@ -634,6 +634,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/nprogress@npm:^6.0.14":
+  version: 6.0.14
+  resolution: "@mantine/nprogress@npm:6.0.14"
+  dependencies:
+    "@mantine/utils": 6.0.14
+  peerDependencies:
+    "@mantine/core": 6.0.14
+    "@mantine/hooks": 6.0.14
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: a26d216f3869624a512409d148f5eea6edeee1f29688ef8113f7a5229e051ed3d5d0bed9a13746a53d2d490e391cd8ca5a5ea22133aa868532d920a498620722
+  languageName: node
+  linkType: hard
+
 "@mantine/ssr@npm:6.0.14":
   version: 6.0.14
   resolution: "@mantine/ssr@npm:6.0.14"
@@ -1287,6 +1301,7 @@ __metadata:
     "@mantine/core": ^6.0.14
     "@mantine/hooks": ^6.0.14
     "@mantine/next": ^6.0.14
+    "@mantine/nprogress": ^6.0.14
     "@prisma/client": ^4.16.0
     "@types/node": 18.14.2
     "@types/react": 18.0.28
