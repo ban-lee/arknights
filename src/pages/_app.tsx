@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { NProgress } from '@/components/nprogress';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import type { AppProps } from 'next/app';
 
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
         },
       }}
     >
+      <NProgress />
       <Component {...pageProps} />
     </MantineProvider>
   );

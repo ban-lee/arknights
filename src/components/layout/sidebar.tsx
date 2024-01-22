@@ -6,7 +6,11 @@ import { SiteLogoVertical } from '@/components/site-logo';
 const useStyles = createStyles((theme) => ({
   navbar: {
     background: '#872A08',
-    height: '100vh',
+    height: '100%',
+    minHeight: '100vh',
+    position: 'sticky',
+    top: 0,
+    zIndex: 0,
 
     [`@media ${lessThanSmall(theme)}`]: {
       display: 'none',
